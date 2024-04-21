@@ -17,6 +17,24 @@ module.exports = {
   },
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        components: ["Link"],
+        specialLink: ["to"],
+      },
+    ],
+    "import/prefer-default-export": "off",
+    "arrow-body-style": ["error", "always"],
+    "react/self-closing-comp": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        namedComponents: ["arrow-function", "function-expression"],
+        unnamedComponents: ["arrow-function", "function-expression"],
+      },
+    ],
+    "@typescript-eslint/quotes": ["error", "single"],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
