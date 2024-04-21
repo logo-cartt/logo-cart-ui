@@ -1,11 +1,9 @@
-import {
-  Stack, Link, TextField, InputAdornment,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Stack, Link, TextField, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 export const HeaderNav = () => {
   return (
-    <Stack spacing={3} direction="row" alignItems="center">
+    <Stack spacing={3} direction="row" alignItems="center" >
       <Link href="/#" underline="none" fontWeight="bold">
         Categories
       </Link>
@@ -20,9 +18,8 @@ export const HeaderNav = () => {
             </InputAdornment>
           ),
         }}
-        style={{ width: '368px' }}
-      >
-      </TextField>
+        style={{ width: "368px" }}
+      ></TextField>
       <Link href="/#" underline="none" fontWeight="bold">
         Login
       </Link>

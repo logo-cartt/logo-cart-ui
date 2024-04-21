@@ -2,6 +2,7 @@ import { Box, Container } from '@mui/material';
 import './App.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Header } from './components/Header/Header';
+import { Ads } from './components/Ads/Ads';
 
 // Define your primary and secondary colors
 const theme = createTheme({
@@ -21,6 +22,7 @@ const App = () => {
       <Container maxWidth="lg">
         <Box>
           <Header />
+          <Ads />
         </Box>
       </Container>
     </ThemeProvider>
