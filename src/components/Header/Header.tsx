@@ -1,5 +1,5 @@
-import { Typography, Stack } from '@mui/material';
-import { HeaderNav } from './HeaderNav';
+import { Typography, Stack } from "@mui/material";
+import { HeaderNav } from "./HeaderNav";
 
 export const Header = () => {
   return (

@@ -34,8 +34,8 @@ module.exports = {
         unnamedComponents: ["arrow-function", "function-expression"],
       },
     ],
-    "quotes": "off",
-    "@typescript-eslint/quotes": "error",
+    quotes: "off",
+    "@typescript-eslint/quotes": ["error", "double"],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
