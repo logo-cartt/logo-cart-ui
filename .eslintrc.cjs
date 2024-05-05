@@ -40,6 +40,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
+    "object-curly-newline": ["error", { "multiline": true }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": ["error", "only-multiline"],

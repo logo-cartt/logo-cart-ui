@@ -1,6 +1,4 @@
-import {
-  Stack, Link, TextField, InputAdornment,
-} from "@mui/material";
+import { Stack, Link, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 export const HeaderNav = () => {

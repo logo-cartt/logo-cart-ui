@@ -23,15 +23,9 @@ declare module "@mui/material/Button" {
 // Define your primary and secondary colors
 const theme = createTheme({
   palette: {
-    primary: {
-      main: "#000", // Set your primary color here
-    },
-    secondary: {
-      main: "#c039ff", // Set your secondary color here
-    },
-    violet: {
-      main: "#7C27F7",
-    },
+    primary: { main: "#000" },
+    secondary: { main: "#c039ff" },
+    violet: { main: "#7C27F7" },
   },
 });
 

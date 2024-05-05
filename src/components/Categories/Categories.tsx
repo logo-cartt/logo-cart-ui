@@ -1,11 +1,8 @@
-import {
-  Box, Grid, Stack, Typography,
-} from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { ProductCard } from "./ProductCard";
+import { categoryNames, productCard } from "../../data/data";
 
 export const Categories = () => {
-  const categoryNames = ["Low Prices >", "All >", "Sports >"];
   return (
     <Box>
       <Stack alignItems="start" padding="0px">
@@ -13,7 +10,7 @@ export const Categories = () => {
           return (
             <Box>
               <Typography
-                key={uuidv4()}
+                key={category.id}
                 variant="h5"
                 fontSize="29px"
                 fontWeight="bold"
@@ -21,13 +18,19 @@ export const Categories = () => {
                 marginBottom="30px"
                 textAlign="left"
               >
-                {category}
+                {`${category.name} >`}
               </Typography>
               <Grid container spacing={5}>
-                {[...Array(8)].map(() => {
+                {productCard.map((product) => {
                   return (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={uuidv4()}>
-                      <ProductCard />
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                      <ProductCard
+                        name={product.name}
+                        group={product.group}
+                        ranking={product.ranking}
+                        reviews={product.reviews}
+                        price={product.price}
+                      />
                     </Grid>
                   );
                 })}

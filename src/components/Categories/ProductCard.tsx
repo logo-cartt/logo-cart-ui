@@ -8,8 +8,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { Product } from "../../interfaces/interfaces";
 
-export const ProductCard = () => {
+export const ProductCard = ({
+  name,
+  group,
+  ranking,
+  reviews,
+  price,
+}: Omit<Product, "id">) => {
   return (
     <Card sx={{ maxWidth: 255, border: "1px solid #777777" }}>
       <CardMedia
@@ -21,16 +28,16 @@ export const ProductCard = () => {
       <CardContent sx={{ "&:last-child": { padding: "0px" } }}>
         <Stack alignItems="start" padding="28px 23px 28px 22px">
           <Typography variant="h5" fontSize="1.125rem" fontWeight="600">
-            T-Shirt. Blue
+            {name}
           </Typography>
           <Typography variant="body1" component="h6" fontWeight="600">
-            Clothes
+            {group}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            4.8 (11285 reviews)
+            {`${ranking} (${reviews} reviews)`}
           </Typography>
           <Typography variant="h5" fontSize="1.125rem" fontWeight="600">
-            $16.99
+            {`$${price}`}
           </Typography>
         </Stack>
         <Button
