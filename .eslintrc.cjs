@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     "import/prefer-default-export": "off",
-    "arrow-body-style": ["error", "always"],
+    "arrow-body-style": "off",
     "react/self-closing-comp": "off",
     "react/function-component-definition": [
       2,
@@ -40,7 +40,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "object-curly-newline": ["error", { "multiline": true }],
+    // "object-curly-newline": ["error", { "multiline": true }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": ["error", "only-multiline"],

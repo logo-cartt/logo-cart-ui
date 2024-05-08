@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Product } from "../../interfaces/interfaces";
+import { Product } from "../../types/types";
 
 export const ProductCard = ({
   name,

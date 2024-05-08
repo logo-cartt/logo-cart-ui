@@ -1,6 +1,8 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
-import { ProductCard } from "./ProductCard";
-import { categoryNames, productCard } from "../../data/data";
+import {
+  Box, Grid, Stack, Typography,
+} from "@mui/material";
+import { ProductCard } from "../../../../components/ProductCard/ProductCard";
+import { categoryNames, products } from "../../../../data/data";
 
 export const Categories = () => {
   return (
@@ -21,7 +23,7 @@ export const Categories = () => {
                 {`${category.name} >`}
               </Typography>
               <Grid container spacing={5}>
-                {productCard.map((product) => {
+                {products.map((product) => {
                   return (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                       <ProductCard

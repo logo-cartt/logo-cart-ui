@@ -1,4 +1,4 @@
-import { Category, Product } from "../interfaces/interfaces";
+import { Category, Product } from "../types/types";
 
 export const categoryNames: Category[] = [
   {
@@ -15,7 +15,7 @@ export const categoryNames: Category[] = [
   },
 ];
 
-export const productCard: Product[] = [
+export const products: Product[] = [
   {
     id: 1,
     name: " T-Shirt. Blue",
