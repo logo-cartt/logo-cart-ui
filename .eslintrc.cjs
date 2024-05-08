@@ -17,10 +17,30 @@ module.exports = {
   },
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        components: ["Link"],
+        specialLink: ["to"],
+      },
+    ],
+    "import/prefer-default-export": "off",
+    "arrow-body-style": "off",
+    "react/self-closing-comp": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        namedComponents: ["arrow-function", "function-expression"],
+        unnamedComponents: ["arrow-function", "function-expression"],
+      },
+    ],
+    quotes: "off",
+    "@typescript-eslint/quotes": ["error", "double"],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
+    // "object-curly-newline": ["error", { "multiline": true }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "comma-dangle": ["error", "only-multiline"],
