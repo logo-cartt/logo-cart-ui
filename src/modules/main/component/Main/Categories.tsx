@@ -1,7 +1,7 @@
 import {
   Box, Grid, Stack, Typography,
 } from "@mui/material";
-import { ProductCard } from "../../../../components/ProductCard/ProductCard";
+import { ProductCard } from "../../../../components/ProductCard";
 import { categoryNames, products } from "../../../../data/data";
 
 export const Categories = () => {

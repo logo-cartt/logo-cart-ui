@@ -1,8 +1,6 @@
 import {
   Button,
-  // Button,
   Card,
-  // CardActions,
   CardContent,
   CardMedia,
   Stack,
