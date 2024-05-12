@@ -7,7 +7,7 @@ type Props = {
 
 export const LogoCartLayout = ({ children }: Props) => {
   return (
-    <Container maxWidth="lg">
+    <Container sx={{ width: "1100px" }}>
       <Header />
       {children}
     </Container>

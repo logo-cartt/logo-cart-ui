@@ -1,8 +1,9 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { GlobalStyleWrapper } from "../GlobalStyleWrapper";
 import { theme } from "../../theme";
-import { MainPage } from "../../modules/main/page/MainPage";
+import { GlobalStyleWrapper } from "../GlobalStyleWrapper";
+import { LoginPage } from "../../modules/auth/page/LoginPage";
+// import { MainPage } from "../../modules/main/page/MainPage";
 
 export const App = () => {
   return (
@@ -10,7 +11,8 @@ export const App = () => {
       <CssBaseline />
       <GlobalStyleWrapper>
         <ThemeProvider theme={theme}>
-          <MainPage />
+          {/* <MainPage /> */}
+          <LoginPage />
         </ThemeProvider>
       </GlobalStyleWrapper>
     </>
