@@ -5,8 +5,9 @@ import {
 import { styled } from "@mui/material/styles";
 
 const TextFieldStyled = styled(TextField)({
-  marginTop: "32px",
+  marginTop: "51px",
   borderRadius: "5px",
+  border: "1px solid black",
   color: "black",
   "& input": {
     "&::placeholder": {
@@ -20,10 +21,11 @@ const ButtonStyled = styled(Button)({
   fontSize: "24px",
   marginTop: "32px",
   height: "54px",
-  fontFamily: "Inter",
+  // fontFamily: "Inter",
   textTransform: "none",
   fontWeight: "600",
 });
+
 export const Login = () => {
   return (
     <Grid

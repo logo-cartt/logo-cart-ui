@@ -2,7 +2,8 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 import { GlobalStyleWrapper } from "../GlobalStyleWrapper";
-import { LoginPage } from "../../modules/auth/page/LoginPage";
+// import { LoginPage } from "../../modules/auth/page/LoginPage";
+import { SignUpPage } from "../../modules/auth/page/SignUpPage";
 // import { MainPage } from "../../modules/main/page/MainPage";
 
 export const App = () => {
@@ -12,7 +13,8 @@ export const App = () => {
       <GlobalStyleWrapper>
         <ThemeProvider theme={theme}>
           {/* <MainPage /> */}
-          <LoginPage />
+          {/* <LoginPage /> */}
+          <SignUpPage />
         </ThemeProvider>
       </GlobalStyleWrapper>
     </>
