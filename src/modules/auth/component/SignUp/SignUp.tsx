@@ -1,29 +1,9 @@
 import {
-  Button, Grid,
-  TextField, Typography,
+  Grid,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
-const TextFieldStyled = styled(TextField)({
-  marginTop: "51px",
-  borderRadius: "5px",
-  color: "black",
-  "& input": {
-    "&::placeholder": {
-      color: "black",
-    },
-  },
-});
-
-const ButtonStyled = styled(Button)({
-  color: "white",
-  fontSize: "24px",
-  marginTop: "32px",
-  height: "54px",
-  // fontFamily: "Inter",
-  textTransform: "none",
-  fontWeight: "600",
-});
+import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
+import { TextField } from "../../../../components/UI/TextField";
+import { Heading } from "../../../../components/UI/Heading";
 
 export const SignUp = () => {
   return (
@@ -31,9 +11,10 @@ export const SignUp = () => {
       container
       justifyContent="flex-start"
       alignItems="center"
+      spacing={6}
     >
       <Grid item sm={8} lg={12}>
-        <Typography align="left" variant="h5" fontSize="29px" padding="32px 0 0 0">Sign up</Typography>
+        <Heading align="left" padding="32px 0 0 0">Sign up</Heading>
       </Grid>
 
       <Grid
@@ -45,19 +26,25 @@ export const SignUp = () => {
           <Grid item sm={12} spacing={2}>
 
             <form>
-              <TextFieldStyled label="Email" placeholder="email@gmail.com" type="email" size="small" fullWidth />
-              <TextFieldStyled label="Seller name" placeholder="Seller name" type="text" size="small" fullWidth />
-              <TextFieldStyled label="Password" placeholder="********" type="password" size="small" fullWidth />
-              <TextFieldStyled label="Confirm password" placeholder="********" type="password" size="small" fullWidth />
-              <ButtonStyled
-                type="submit"
-                color="violet"
-                variant="contained"
-                fullWidth
-                disableElevation
-              >
-                Submit
-              </ButtonStyled>
+              <Grid container spacing={6}>
+                <Grid item xs={12}>
+                  <TextField label="Email" placeholder="email@gmail.com" type="email" />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField label="Seller name" placeholder="Seller name" type="text" size="small" fullWidth />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField label="Password" placeholder="********" type="password" size="small" fullWidth />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField label="Confirm password" placeholder="********" type="password" size="small" fullWidth />
+                </Grid>
+                <Grid item xs={12}>
+                  <PrimaryButton>
+                    Submit
+                  </PrimaryButton>
+                </Grid>
+              </Grid>
             </form>
           </Grid>
         </Grid>
