@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profileData } from "../../../../data/data";
+import { profileData, profilesData } from "../../../../data/data";
 import { Profile } from "../../../../types/types";
 
 export const SignUp = () => {
@@ -30,6 +30,7 @@ export const SignUp = () => {
       id: uuidv4(),
       ...formData,
     };
+    profilesData.push(newFormData);
     const updatedSubmittedData = [...submittedData, newFormData];
     setSubmittedData(updatedSubmittedData);
 

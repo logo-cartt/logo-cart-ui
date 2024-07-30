@@ -88,3 +88,12 @@ export const profileData: Omit<Profile, "id"> = {
   password: "",
   confirmPassword: "",
 };
+
+export const profilesData: Omit<Profile, "id">[] = [
+  {
+    name: "Azimkhan",
+    email: "aabdulsatarov@gmail.com",
+    password: "123456",
+    confirmPassword: "123456",
+  },
+];
