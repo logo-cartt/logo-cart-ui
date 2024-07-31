@@ -1,7 +1,8 @@
 import {
-  Box, Grid, Stack, Typography,
+  Box, Grid, Stack,
 } from "@mui/material";
 import { ProductCard } from "../../../../components/ProductCard";
+import { Heading } from "../../../../components/UI/Heading";
 import { categoryNames, products } from "../../../../data/data";
 
 export const Categories = () => {
@@ -11,17 +12,15 @@ export const Categories = () => {
         {categoryNames.map((category) => {
           return (
             <Box>
-              <Typography
+              <Heading
                 key={category.id}
-                variant="h5"
-                fontSize="29px"
                 fontWeight="bold"
                 marginTop="57px"
                 marginBottom="30px"
                 textAlign="left"
               >
                 {`${category.name} >`}
-              </Typography>
+              </Heading>
               <Grid container spacing={5}>
                 {products.map((product) => {
                   return (

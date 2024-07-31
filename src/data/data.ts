@@ -1,4 +1,4 @@
-import { Category, Product } from "../types/types";
+import { Category, Product, Profile } from "../types/types";
 
 export const categoryNames: Category[] = [
   {
@@ -79,5 +79,21 @@ export const products: Product[] = [
     ranking: 4.8,
     reviews: 11285,
     price: 16.99,
+  },
+];
+
+export const profileData: Omit<Profile, "id"> = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+export const profilesData: Omit<Profile, "id">[] = [
+  {
+    name: "Azimkhan",
+    email: "aabdulsatarov@gmail.com",
+    password: "123456",
+    confirmPassword: "123456",
   },
 ];
