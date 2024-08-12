@@ -1,23 +1,25 @@
 import {
   Grid,
 } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { profilesData } from "../../../../data/data";
+import { setEmail, setError, setPassword } from "../../../../store/features/loginSlice";
 
 export const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const { email, password, error } = useAppSelector((state) => state.login);
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "email") {
-      setEmail(value);
+      dispatch(setEmail(value));
     } else if (name === "password") {
-      setPassword(value);
+      dispatch(setPassword(value));
     }
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -25,11 +27,11 @@ export const Login = () => {
     const user = profilesData.find((profile) => email === profile.email
     && password === profile.password);
     if (user) {
-      setError("");
+      dispatch(setError(""));
       // eslint-disable-next-line no-console
       console.log("Login successful");
     } else {
-      setError("Invalid email or password");
+      dispatch(setError("Invalid email or password"));
     }
   };
   return (

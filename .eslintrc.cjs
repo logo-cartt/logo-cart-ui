@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
+    'linebreak-style': ['error', 'windows'],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
