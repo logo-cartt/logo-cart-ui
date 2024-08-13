@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type User = {
+type Login = {
   email: string,
   password: string,
   error: string,
 };
 
-const initialState: User = {
+const initialState: Login = {
   email: "",
   password: "",
   error: "",

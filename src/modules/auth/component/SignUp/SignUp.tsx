@@ -1,20 +1,25 @@
 import {
   Grid,
 } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ChangeEvent, FormEvent, useEffect, useState,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profileData, profilesData } from "../../../../data/data";
+import { profileData } from "../../../../data/data";
 import { Profile } from "../../../../types/types";
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { addUser } from "../../../../store/features/signUpSlice";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState<Omit<Profile, "id">>(
     profileData,
   );
-
-  const [submittedData, setSubmittedData] = useState<Profile[]>([]);
+  const { profiles } = useAppSelector((state) => state.signUp);
+  const dispatch = useAppDispatch();
+  // const [submittedData, setSubmittedData] = useState<Profile[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,18 +29,19 @@ export const SignUp = () => {
     });
   };
 
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log("All Submitted Data:", profiles);
+  }, [profiles]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newFormData: Profile = {
       id: uuidv4(),
       ...formData,
     };
-    profilesData.push(newFormData);
-    const updatedSubmittedData = [...submittedData, newFormData];
-    setSubmittedData(updatedSubmittedData);
 
-    // eslint-disable-next-line no-console
-    console.log("All Submitted Data:", updatedSubmittedData);
+    dispatch(addUser(newFormData));
 
     setFormData(
       {
