@@ -1,8 +1,10 @@
 import {
   Stack, Link, TextField, InputAdornment,
+  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
+import { useAppSelector } from "../../store/hooks";
 
 const LinkStyled = styled(Link)({
   "&:hover": {
@@ -11,6 +13,7 @@ const LinkStyled = styled(Link)({
 });
 
 export const HeaderNav = () => {
+  const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   return (
     <Stack spacing={3} direction="row" alignItems="center">
       <Link href="/#" underline="none" fontWeight="bold" sx={{ paddingRight: "77px" }}>
@@ -38,6 +41,19 @@ export const HeaderNav = () => {
       </LinkStyled>
       <LinkStyled href="/#" underline="none" fontWeight="bold">
         Cart
+        <Typography
+          component="span"
+          color="white"
+          sx={{
+            display: "inline-block",
+            width: "20px",
+            height: "100%",
+            backgroundColor: "#750DFA",
+            marginLeft: "5px",
+          }}
+        >
+          {totalQuantity}
+        </Typography>
       </LinkStyled>
     </Stack>
   );

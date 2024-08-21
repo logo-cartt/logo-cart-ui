@@ -18,7 +18,7 @@ export const categoryNames: Category[] = [
 export const products: Product[] = [
   {
     id: 1,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -26,7 +26,7 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -34,7 +34,7 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -42,7 +42,7 @@ export const products: Product[] = [
   },
   {
     id: 4,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -50,7 +50,7 @@ export const products: Product[] = [
   },
   {
     id: 5,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -58,7 +58,7 @@ export const products: Product[] = [
   },
   {
     id: 6,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -66,7 +66,7 @@ export const products: Product[] = [
   },
   {
     id: 7,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -74,7 +74,7 @@ export const products: Product[] = [
   },
   {
     id: 8,
-    name: " T-Shirt. Blue",
+    name: "T-Shirt. Blue",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -88,12 +88,3 @@ export const profileData: Omit<Profile, "id"> = {
   password: "",
   confirmPassword: "",
 };
-
-export const profilesData: Omit<Profile, "id">[] = [
-  {
-    name: "Azimkhan",
-    email: "aabdulsatarov@gmail.com",
-    password: "123456",
-    confirmPassword: "123456",
-  },
-];

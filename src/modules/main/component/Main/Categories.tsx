@@ -24,13 +24,10 @@ export const Categories = () => {
               <Grid container spacing={5}>
                 {products.map((product) => {
                   return (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
                       <ProductCard
-                        name={product.name}
-                        group={product.group}
-                        ranking={product.ranking}
-                        reviews={product.reviews}
-                        price={product.price}
+                        // key={product.id}
+                        product={product}
                       />
                     </Grid>
                   );

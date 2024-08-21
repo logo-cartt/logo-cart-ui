@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profilesData } from "../../../../data/data";
 import { setEmail, setError, setPassword } from "../../../../store/features/loginSlice";
 
 export const Login = () => {
   const { email, password, error } = useAppSelector((state) => state.login);
+  const { profiles } = useAppSelector((state) => state.signUp);
   const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,7 @@ export const Login = () => {
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const user = profilesData.find((profile) => email === profile.email
+    const user = profiles.find((profile) => email === profile.email
     && password === profile.password);
     if (user) {
       dispatch(setError(""));
