@@ -8,6 +8,8 @@ import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { setEmail, setError, setPassword } from "../../../../store/features/loginSlice";
+import { login } from "../../../../store/features/tokenSlice";
+import { token } from "../../../../data/data";
 
 export const Login = () => {
   const { email, password, error } = useAppSelector((state) => state.login);
@@ -28,6 +30,8 @@ export const Login = () => {
     && password === profile.password);
     if (user) {
       dispatch(setError(""));
+      dispatch(login(token));
+      localStorage.setItem("token", token);
       // eslint-disable-next-line no-console
       console.log("Login successful");
     } else {

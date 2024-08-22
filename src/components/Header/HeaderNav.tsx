@@ -1,10 +1,12 @@
 import {
   Stack, Link, TextField, InputAdornment,
   Typography,
+  Button,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { logout } from "../../store/features/tokenSlice";
 
 const LinkStyled = styled(Link)({
   "&:hover": {
@@ -14,6 +16,14 @@ const LinkStyled = styled(Link)({
 
 export const HeaderNav = () => {
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
+  const isAuthenticated = useAppSelector((state) => state.token.isAuthenticated);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+  };
+
   return (
     <Stack spacing={3} direction="row" alignItems="center">
       <Link href="/#" underline="none" fontWeight="bold" sx={{ paddingRight: "77px" }}>
@@ -33,9 +43,12 @@ export const HeaderNav = () => {
           ),
         }}
       />
-      <LinkStyled href="/#" underline="none" fontWeight="bold">
-        Login
-      </LinkStyled>
+      {isAuthenticated ? <Button onClick={handleLogout} sx={{ fontWeight: "bold", textTransform: "none", fontSize: "1rem" }}>Logout</Button> : (
+        <LinkStyled href="/#" underline="none" fontWeight="bold">
+          Login
+        </LinkStyled>
+      )}
+
       <LinkStyled href="/#" underline="none" fontWeight="bold">
         Favourite
       </LinkStyled>
@@ -46,7 +59,7 @@ export const HeaderNav = () => {
           color="white"
           sx={{
             display: "inline-block",
-            width: "20px",
+            width: "15px",
             height: "100%",
             backgroundColor: "#750DFA",
             marginLeft: "5px",
