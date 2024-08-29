@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../store/features/tokenSlice";
+import { loginUser } from "../../store/features/userSlice";
 
 const LinkStyled = styled(Link)({
   "&:hover": {
@@ -20,8 +21,12 @@ export const HeaderNav = () => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    const data = JSON.parse(localStorage.getItem("user") || "");
+    const logoutUser = { email: data.email, password: data.password, isLoggedIn: false };
+    dispatch(loginUser(logoutUser));
     dispatch(logout());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   return (
@@ -59,7 +64,7 @@ export const HeaderNav = () => {
           color="white"
           sx={{
             display: "inline-block",
-            width: "15px",
+            maxWidth: "30px",
             height: "100%",
             backgroundColor: "#750DFA",
             marginLeft: "5px",

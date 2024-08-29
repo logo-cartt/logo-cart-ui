@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Profile } from "../../types/types";
+import { Profile, UserLogin } from "../../types/types";
 
-type SignUp = {
+type User = {
   profiles: Profile[]
 };
 
-const initialState: SignUp = {
+const initialState: User = {
   profiles: [
     {
       id: "1",
@@ -14,21 +14,31 @@ const initialState: SignUp = {
       email: "aabdulsatarov@gmail.com",
       password: "123456",
       confirmPassword: "123456",
+      isLoggedIn: false,
     },
   ],
 };
 
-export const signUpSlice = createSlice({
-  name: "signUp",
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     addUser: (state, action: PayloadAction<Profile>) => {
       state.profiles.push(action.payload);
     },
+    loginUser: (state, action: PayloadAction<UserLogin>) => {
+      return {
+        ...state,
+        email: action.payload.email,
+        password: action.payload.password,
+        isLoggedIn: action.payload.isLoggedIn,
+      };
+    },
+
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUser } = signUpSlice.actions;
+export const { addUser, loginUser } = userSlice.actions;
 
-export default signUpSlice.reducer;
+export default userSlice.reducer;

@@ -1,11 +1,13 @@
 import {
   Box, Grid, Stack,
 } from "@mui/material";
-import { ProductCard } from "../../../../components/ProductCard";
+import { ProductCart } from "../../../../components/ProductCart";
 import { Heading } from "../../../../components/UI/Heading";
 import { categoryNames, products } from "../../../../data/data";
+import { useProductCart } from "../../../../components/ProductCart/useProductCart";
 
 export const Categories = () => {
+  const { onAddToCart, onRemoveFromCart } = useProductCart();
   return (
     <Box>
       <Stack alignItems="start" padding="0px">
@@ -25,9 +27,11 @@ export const Categories = () => {
                 {products.map((product) => {
                   return (
                     <Grid item xs={12} sm={6} md={4} lg={3}>
-                      <ProductCard
+                      <ProductCart
                         // key={product.id}
                         product={product}
+                        onAddToCart={onAddToCart}
+                        onRemoveFromCart={onRemoveFromCart}
                       />
                     </Grid>
                   );

@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TokenState {
+interface ITokenState {
   token: string | null;
   isAuthenticated: boolean;
 }
 
-const initialState: TokenState = {
+const initialState: ITokenState = {
   token: null,
   isAuthenticated: false,
 };

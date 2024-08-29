@@ -18,4 +18,7 @@ export type Profile = {
   email: string;
   password: string;
   confirmPassword: string;
+  isLoggedIn: boolean;
 };
+
+export type UserLogin = Omit<Profile, "id" | "name" | "confirmPassword">;

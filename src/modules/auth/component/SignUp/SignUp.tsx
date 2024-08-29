@@ -8,18 +8,18 @@ import { v4 as uuidv4 } from "uuid";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profileData } from "../../../../data/data";
+import { profileData, token } from "../../../../data/data";
 import { Profile } from "../../../../types/types";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
-import { addUser } from "../../../../store/features/signUpSlice";
+import { login } from "../../../../store/features/tokenSlice";
+import { addUser } from "../../../../store/features/userSlice";
 
 export const SignUp = () => {
-  const [formData, setFormData] = useState<Omit<Profile, "id">>(
+  const [formData, setFormData] = useState<Omit<Profile, "id" | "isLoggedIn">>(
     profileData,
   );
-  const { profiles } = useAppSelector((state) => state.signUp);
+  const { profiles } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  // const [submittedData, setSubmittedData] = useState<Profile[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,11 +38,14 @@ export const SignUp = () => {
     e.preventDefault();
     const newFormData: Profile = {
       id: uuidv4(),
+      isLoggedIn: true,
       ...formData,
     };
 
     dispatch(addUser(newFormData));
-
+    dispatch(login(token));
+    localStorage.setItem("user", JSON.stringify({ email: newFormData.email, password: newFormData.password, isLoggedIn: true }));
+    localStorage.setItem("token", token);
     setFormData(
       {
         name: "",
