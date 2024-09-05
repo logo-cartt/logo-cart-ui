@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Button,
   Card,
@@ -7,18 +6,17 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { Product } from "../../types/types";
-import { ProductCartItemCounter } from "./ProductCartItemCounter";
+import { ProductCardItemCounter } from "./ProductCardItemCounter";
 import { useAppSelector } from "../../store/hooks";
 
-interface IProductCart {
+type Props = {
   product: Product;
   onAddToCart: (product: Product) => void;
   onRemoveFromCart: (id: number) => void;
-}
+};
 
-export const ProductCart: React.FC<IProductCart> = ({ product, onAddToCart, onRemoveFromCart }) => {
+export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
   const { cartItems } = useAppSelector((state) => state.cart);
   const {
     id, group, name, price, ranking, reviews,
@@ -70,9 +68,9 @@ export const ProductCart: React.FC<IProductCart> = ({ product, onAddToCart, onRe
             </Button>
           )
           : (
-            <ProductCartItemCounter
+            <ProductCardItemCounter
               onClickEvent={handleClick}
-              onAddEvent={onAddToCart}
+              onAddProduct={onAddToCart}
               numberOfItems={numberOfItems}
               product={product}
             />
@@ -80,4 +78,4 @@ export const ProductCart: React.FC<IProductCart> = ({ product, onAddToCart, onRe
       </CardContent>
     </Card>
   );
-};
+}

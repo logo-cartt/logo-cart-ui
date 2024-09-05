@@ -1,15 +1,15 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { Product } from "../../types/types";
 
-interface IProductCartItemCounterProps {
+interface IProductCardItemCounterProps {
   onClickEvent: () => void;
-  onAddEvent: (product: Product) => void;
+  onAddProduct: (product: Product) => void;
   numberOfItems: number;
   product: Product;
 }
 
-export const ProductCartItemCounter: React.FC<IProductCartItemCounterProps> = ({
-  onClickEvent, onAddEvent, numberOfItems, product,
+export const ProductCardItemCounter: React.FC<IProductCardItemCounterProps> = ({
+  onClickEvent, onAddProduct, numberOfItems, product,
 }) => {
   return (
     <Stack alignItems="center" justifyContent="space-between" flexDirection="row">
@@ -28,7 +28,7 @@ export const ProductCartItemCounter: React.FC<IProductCartItemCounterProps> = ({
         {numberOfItems}
       </Typography>
       <Button
-        onClick={() => onAddEvent(product)}
+        onClick={() => onAddProduct(product)}
         variant="contained"
         color="violet"
         sx={{ width: "10px !important", borderRadius: "0px 0px 5px 5px" }}

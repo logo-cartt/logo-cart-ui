@@ -35,11 +35,11 @@ const globalStyle = css`
 
 `;
 
-export const GlobalStyleWrapper = ({ children }: Props) => {
+export function GlobalStyleWrapper({ children }: Props) {
   return (
     <>
       <Global styles={globalStyle} />
       {children}
     </>
   );
-};
+}

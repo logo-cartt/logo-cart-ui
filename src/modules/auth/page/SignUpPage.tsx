@@ -1,10 +1,10 @@
 import { LogoCartLayout } from "../../../layouts/LogoCartLayout";
 import { SignUp } from "../component/SignUp/SignUp";
 
-export const SignUpPage = () => {
+export function SignUpPage() {
   return (
     <LogoCartLayout>
       <SignUp />
     </LogoCartLayout>
   );
-};
+}

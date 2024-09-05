@@ -13,7 +13,7 @@ const TextFieldStyled = styled(MuiTextField)({
     },
   },
 });
-export const TextField = ({ children, ...props }: Props) => {
+export function TextField({ children, ...props }: Props) {
   return (
     <TextFieldStyled
       size="small"
@@ -22,4 +22,4 @@ export const TextField = ({ children, ...props }: Props) => {
     >
     </TextFieldStyled>
   );
-};
+}

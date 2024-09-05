@@ -8,17 +8,17 @@ import { v4 as uuidv4 } from "uuid";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profileData, token } from "../../../../data/data";
+import { profileData, token } from "../../../../data-mock/data";
 import { Profile } from "../../../../types/types";
-import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
+import { useAppDispatch } from "../../../../store/hooks";
 import { login } from "../../../../store/features/tokenSlice";
-import { addUser } from "../../../../store/features/userSlice";
+import { UserRepository, userRepository } from "../../../../data-mock/userMock";
 
-export const SignUp = () => {
+export function SignUp() {
   const [formData, setFormData] = useState<Omit<Profile, "id" | "isLoggedIn">>(
     profileData,
   );
-  const { profiles } = useAppSelector((state) => state.user);
+  const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,20 +31,19 @@ export const SignUp = () => {
 
   useEffect(() => {
     // eslint-disable-next-line no-console
-    console.log("All Submitted Data:", profiles);
-  }, [profiles]);
+    console.log("All Submitted Data:", users);
+  }, [users]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newFormData: Profile = {
       id: uuidv4(),
-      isLoggedIn: true,
       ...formData,
     };
 
-    dispatch(addUser(newFormData));
+    users.addUser(newFormData);
     dispatch(login(token));
-    localStorage.setItem("user", JSON.stringify({ email: newFormData.email, password: newFormData.password, isLoggedIn: true }));
+    localStorage.setItem("user", JSON.stringify({ email: newFormData.email }));
     localStorage.setItem("token", token);
     setFormData(
       {
@@ -135,4 +134,4 @@ export const SignUp = () => {
       </Grid>
     </Grid>
   );
-};
+}

@@ -1,21 +1,20 @@
 import {
   Box, Grid, Stack,
 } from "@mui/material";
-import { ProductCart } from "../../../../components/ProductCart";
+import { ProductCard } from "../../../../components/ProductCard";
 import { Heading } from "../../../../components/UI/Heading";
-import { categoryNames, products } from "../../../../data/data";
-import { useProductCart } from "../../../../components/ProductCart/useProductCart";
+import { categoryNames, products } from "../../../../data-mock/data";
+import { useProductCard } from "../../../../components/ProductCard/useProductCard";
 
-export const Categories = () => {
-  const { onAddToCart, onRemoveFromCart } = useProductCart();
+export function Categories() {
+  const { onAddToCart, onRemoveFromCart } = useProductCard();
   return (
     <Box>
       <Stack alignItems="start" padding="0px">
         {categoryNames.map((category) => {
           return (
-            <Box>
+            <Box key={category.id}>
               <Heading
-                key={category.id}
                 fontWeight="bold"
                 marginTop="57px"
                 marginBottom="30px"
@@ -26,9 +25,8 @@ export const Categories = () => {
               <Grid container spacing={5}>
                 {products.map((product) => {
                   return (
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                      <ProductCart
-                        // key={product.id}
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                      <ProductCard
                         product={product}
                         onAddToCart={onAddToCart}
                         onRemoveFromCart={onRemoveFromCart}
@@ -43,4 +41,4 @@ export const Categories = () => {
       </Stack>
     </Box>
   );
-};
+}

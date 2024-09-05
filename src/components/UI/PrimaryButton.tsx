@@ -14,7 +14,7 @@ const ButtonStyled = styled(Button)({
   fontWeight: "600",
 });
 
-export const PrimaryButton = ({ children, ...props }: Props) => {
+export function PrimaryButton({ children, ...props }: Props) {
   return (
     <ButtonStyled
       type="submit"
@@ -27,4 +27,4 @@ export const PrimaryButton = ({ children, ...props }: Props) => {
       { children }
     </ButtonStyled>
   );
-};
+}

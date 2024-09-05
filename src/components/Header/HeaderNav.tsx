@@ -1,5 +1,8 @@
 import {
-  Stack, Link, TextField, InputAdornment,
+  Stack,
+  Link,
+  TextField,
+  InputAdornment,
   Typography,
   Button,
 } from "@mui/material";
@@ -7,7 +10,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../store/features/tokenSlice";
-import { loginUser } from "../../store/features/userSlice";
 
 const LinkStyled = styled(Link)({
   "&:hover": {
@@ -15,15 +17,14 @@ const LinkStyled = styled(Link)({
   },
 });
 
-export const HeaderNav = () => {
+export function HeaderNav() {
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
-  const isAuthenticated = useAppSelector((state) => state.token.isAuthenticated);
+  const isAuthenticated = useAppSelector(
+    (state) => state.token.isAuthenticated,
+  );
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    const data = JSON.parse(localStorage.getItem("user") || "");
-    const logoutUser = { email: data.email, password: data.password, isLoggedIn: false };
-    dispatch(loginUser(logoutUser));
     dispatch(logout());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -31,7 +32,12 @@ export const HeaderNav = () => {
 
   return (
     <Stack spacing={3} direction="row" alignItems="center">
-      <Link href="/#" underline="none" fontWeight="bold" sx={{ paddingRight: "77px" }}>
+      <Link
+        href="/#"
+        underline="none"
+        fontWeight="bold"
+        sx={{ paddingRight: "77px" }}
+      >
         Categories
       </Link>
       <TextField
@@ -48,7 +54,14 @@ export const HeaderNav = () => {
           ),
         }}
       />
-      {isAuthenticated ? <Button onClick={handleLogout} sx={{ fontWeight: "bold", textTransform: "none", fontSize: "1rem" }}>Logout</Button> : (
+      {isAuthenticated ? (
+        <Button
+          onClick={handleLogout}
+          sx={{ fontWeight: "bold", textTransform: "none", fontSize: "1rem" }}
+        >
+          Logout
+        </Button>
+      ) : (
         <LinkStyled href="/#" underline="none" fontWeight="bold">
           Login
         </LinkStyled>
@@ -75,4 +88,4 @@ export const HeaderNav = () => {
       </LinkStyled>
     </Stack>
   );
-};
+}

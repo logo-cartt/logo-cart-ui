@@ -2,7 +2,7 @@ import { Product } from "../../types/types";
 import { useAppDispatch } from "../../store/hooks";
 import { addItem, removeItem } from "../../store/features/cartSlice";
 
-export const useProductCart = () => {
+export const useProductCard = () => {
   const dispatch = useAppDispatch();
 
   const handleAddToCart = (item: Product) => {

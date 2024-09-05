@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { Heading } from "../UI/Heading";
 import { HeaderNav } from "./HeaderNav";
 
-export const Header = () => {
+export function Header() {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between" padding="14px 19px">
       <Heading color="secondary" fontWeight="bold">
@@ -12,4 +12,4 @@ export const Header = () => {
       <HeaderNav />
     </Stack>
   );
-};
+}
