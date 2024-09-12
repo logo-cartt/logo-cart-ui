@@ -34,14 +34,14 @@ export function SignUp() {
     console.log("All Submitted Data:", users);
   }, [users]);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newFormData: Profile = {
       id: uuidv4(),
       ...formData,
     };
 
-    users.addUser(newFormData);
+    await users.addUser(newFormData);
     dispatch(login(token));
     localStorage.setItem("user", JSON.stringify({ email: newFormData.email }));
     localStorage.setItem("token", token);

@@ -23,7 +23,7 @@ export class UserRepository {
     this.users = usersMock;
   }
 
-  public addUser(newUser: User) {
+  public async addUser(newUser: User) {
     this.users = [...this.users, newUser];
   }
 
@@ -32,7 +32,7 @@ export class UserRepository {
     return Promise.resolve(foundUser);
   }
 
-  public getUserByEmailAndPassword(email:string, password: string) {
+  public async getUserByEmailAndPassword(email:string, password: string) {
     return this.users.find((user) => user.email === email && user.password === password);
   }
 }
