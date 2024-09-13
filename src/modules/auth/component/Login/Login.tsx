@@ -2,30 +2,57 @@ import {
   Grid,
 } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useAppDispatch } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profilesData } from "../../../../data/data";
+import { login } from "../../../../store/features/tokenSlice";
+import { loginUser } from "../../../../store/features/userSlice";
+import { token } from "../../../../data-mock/data";
+import { UserLogin } from "../../../../types/types";
+import { UserRepository, userRepository } from "../../../../data-mock/userMock";
 
-export const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+export function Login() {
+  const [userData, setUserData] = useState<UserLogin>({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState<string>("");
+  const users: UserRepository = userRepository;
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "email") {
-      setEmail(value);
+      setUserData((prevUserData: UserLogin) => ({
+        ...prevUserData,
+        email: value,
+      }));
     } else if (name === "password") {
-      setPassword(value);
+      setUserData((prevUserData: UserLogin) => ({
+        ...prevUserData,
+        password: value,
+      }));
     }
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const user = profilesData.find((profile) => email === profile.email
-    && password === profile.password);
-    if (user) {
+    const userExists = users.getUserByEmailAndPassword(userData.email, userData.password);
+    if (userExists) {
+      const updatedUserData = {
+        email: userData.email,
+      };
       setError("");
+      dispatch(loginUser(updatedUserData));
+      dispatch(login(token));
+      localStorage.setItem("user", JSON.stringify(updatedUserData));
+      localStorage.setItem("token", token);
+
+      setUserData({
+        ...updatedUserData,
+        email: "",
+        password: "",
+      });
       // eslint-disable-next-line no-console
       console.log("Login successful");
     } else {
@@ -60,7 +87,7 @@ export const Login = () => {
                     type="email"
                     size="small"
                     fullWidth
-                    value={email}
+                    value={userData.email}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -72,7 +99,7 @@ export const Login = () => {
                     type="password"
                     size="small"
                     fullWidth
-                    value={password}
+                    value={userData.password}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -89,4 +116,4 @@ export const Login = () => {
       </Grid>
     </Grid>
   );
-};
+}

@@ -7,14 +7,28 @@ import {
   Typography,
 } from "@mui/material";
 import { Product } from "../../types/types";
+import { ProductCardItemCounter } from "./ProductCardItemCounter";
+import { useAppSelector } from "../../store/hooks";
 
-export const ProductCard = ({
-  name,
-  group,
-  ranking,
-  reviews,
-  price,
-}: Omit<Product, "id">) => {
+type Props = {
+  product: Product;
+  onAddToCart: (product: Product) => void;
+  onRemoveFromCart: (id: number) => void;
+};
+
+export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
+  const { cartItems } = useAppSelector((state) => state.cart);
+  const {
+    id, group, name, price, ranking, reviews,
+  } = product;
+
+  const selectedItem = cartItems.find((cartItem) => cartItem.product.id === id);
+  const numberOfItems = selectedItem?.quantity || 0;
+
+  const handleClick = () => {
+    onRemoveFromCart(id);
+  };
+
   return (
     <Card sx={{ maxWidth: 255, border: "1px solid #777777" }}>
       <CardMedia
@@ -38,17 +52,30 @@ export const ProductCard = ({
             {`$${price}`}
           </Typography>
         </Stack>
-        <Button
-          variant="contained"
-          color="violet"
-          fullWidth
-          sx={{ borderRadius: "0px 0px 5px 5px" }}
-        >
-          <Typography variant="body1" color="#fff">
-            + Add to cart
-          </Typography>
-        </Button>
+        {numberOfItems === 0
+
+          ? (
+            <Button
+              onClick={() => onAddToCart(product)}
+              variant="contained"
+              color="violet"
+              fullWidth
+              sx={{ borderRadius: "0px 0px 5px 5px" }}
+            >
+              <Typography variant="body1" color="#fff">
+                + Add to cart
+              </Typography>
+            </Button>
+          )
+          : (
+            <ProductCardItemCounter
+              onClickEvent={handleClick}
+              onAddProduct={onAddToCart}
+              numberOfItems={numberOfItems}
+              product={product}
+            />
+          )}
       </CardContent>
     </Card>
   );
-};
+}

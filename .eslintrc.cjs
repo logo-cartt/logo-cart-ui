@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
+    'linebreak-style': ['error', 'windows'],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
@@ -28,10 +29,10 @@ module.exports = {
     "arrow-body-style": "off",
     "react/self-closing-comp": "off",
     "react/function-component-definition": [
-      2,
+      0,
       {
-        namedComponents: ["arrow-function", "function-expression"],
-        unnamedComponents: ["arrow-function", "function-expression"],
+        namedComponents: ["function-declaration", "arrow-function", "function-expression"],
+        unnamedComponents: ["function-declaration", "arrow-function", "function-expression"],
       },
     ],
     quotes: "off",

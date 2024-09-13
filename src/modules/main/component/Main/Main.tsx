@@ -1,11 +1,11 @@
 import { Ads } from "./Ads";
 import { Categories } from "./Categories";
 
-export const Main = () => {
+export function Main() {
   return (
     <>
       <Ads />
       <Categories />
     </>
   );
-};
+}

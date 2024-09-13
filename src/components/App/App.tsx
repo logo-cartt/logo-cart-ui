@@ -6,7 +6,7 @@ import { LoginPage } from "../../modules/auth/page/LoginPage";
 // import { SignUpPage } from "../../modules/auth/page/SignUpPage";
 // import { MainPage } from "../../modules/main/page/MainPage";
 
-export const App = () => {
+export function App() {
   return (
     <>
       <CssBaseline />
@@ -19,4 +19,4 @@ export const App = () => {
       </GlobalStyleWrapper>
     </>
   );
-};
+}

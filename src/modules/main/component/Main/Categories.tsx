@@ -3,17 +3,18 @@ import {
 } from "@mui/material";
 import { ProductCard } from "../../../../components/ProductCard";
 import { Heading } from "../../../../components/UI/Heading";
-import { categoryNames, products } from "../../../../data/data";
+import { categoryNames, products } from "../../../../data-mock/data";
+import { useProductCard } from "../../../../components/ProductCard/useProductCard";
 
-export const Categories = () => {
+export function Categories() {
+  const { onAddToCart, onRemoveFromCart } = useProductCard();
   return (
     <Box>
       <Stack alignItems="start" padding="0px">
         {categoryNames.map((category) => {
           return (
-            <Box>
+            <Box key={category.id}>
               <Heading
-                key={category.id}
                 fontWeight="bold"
                 marginTop="57px"
                 marginBottom="30px"
@@ -26,11 +27,9 @@ export const Categories = () => {
                   return (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                       <ProductCard
-                        name={product.name}
-                        group={product.group}
-                        ranking={product.ranking}
-                        reviews={product.reviews}
-                        price={product.price}
+                        product={product}
+                        onAddToCart={onAddToCart}
+                        onRemoveFromCart={onRemoveFromCart}
                       />
                     </Grid>
                   );
@@ -42,4 +41,4 @@ export const Categories = () => {
       </Stack>
     </Box>
   );
-};
+}
