@@ -1,116 +1,106 @@
+/* eslint-disable no-console */
+import { Grid, Typography } from "@mui/material";
 import {
-  Grid,
-} from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+  FormProvider, SubmitHandler, useForm,
+} from "react-hook-form";
 import { useAppDispatch } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
-import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { login } from "../../../../store/features/tokenSlice";
 import { loginUser } from "../../../../store/features/userSlice";
 import { token } from "../../../../data-mock/data";
 import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
+import { LoginForm } from "./LoginForm";
 
 export function Login() {
-  const [userData, setUserData] = useState<UserLogin>({
-    email: "",
-    password: "",
+  const methods = useForm<UserLogin>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
-  const [error, setError] = useState<string>("");
+
+  const {
+    handleSubmit, setError, watch, formState: { errors },
+  } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "email") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        email: value,
-      }));
-    } else if (name === "password") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        password: value,
-      }));
-    }
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userExists = users.getUserByEmailAndPassword(userData.email, userData.password);
-    if (userExists) {
+  const onSubmit: SubmitHandler<UserLogin> = async (data) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
+    const userExists = await users.getUserByEmail(
+      data.email,
+    );
+    const passwordMatch = await users.getUserByEmailAndPassword(
+      data.email,
+      data.password,
+    );
+    if (!userExists) {
+      setError("email", { type: "manual", message: "No user with such email is found" });
+    } else if (!passwordMatch) {
+      setError("password", { type: "manual", message: "Incorrect password" });
+    } else {
       const updatedUserData = {
-        email: userData.email,
+        email: data.email,
       };
-      setError("");
       dispatch(loginUser(updatedUserData));
       dispatch(login(token));
       localStorage.setItem("user", JSON.stringify(updatedUserData));
       localStorage.setItem("token", token);
 
-      setUserData({
-        ...updatedUserData,
-        email: "",
-        password: "",
-      });
       // eslint-disable-next-line no-console
       console.log("Login successful");
-    } else {
-      setError("Invalid email or password");
     }
   };
+
+  // eslint-disable-next-line no-console
+  console.log(watch("email"));
+
   return (
-    <Grid
-      container
-      justifyContent="flex-start"
-      alignItems="center"
-      spacing={6}
-    >
+    <Grid container justifyContent="flex-start" alignItems="center" spacing={6}>
       <Grid item sm={8} lg={12}>
-        <Heading align="left" padding="32px 0 0 0">Login</Heading>
+        <Heading align="left" padding="32px 0 0 0">
+          Login
+        </Heading>
       </Grid>
 
-      <Grid
-        item
-        sm={5}
-      >
+      <Grid item sm={5}>
         <Grid container spacing={2}>
           <Grid item sm={12}>
+            <FormProvider {...methods}>
 
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={6}>
-                <Grid item sm={12}>
-                  <TextField
-                    label="Email"
-                    placeholder="email@gmail.com"
-                    name="email"
-                    type="email"
-                    size="small"
-                    fullWidth
-                    value={userData.email}
-                    onChange={handleChange}
-                  />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={6}>
+                  <Grid item sm={12}>
+                    <LoginForm
+                      name="email"
+                      label="Email"
+                      placeholder="email@gmail.com"
+                      type="email"
+                    />
+                  </Grid>
+                  <Grid item sm={12}>
+                    <LoginForm
+                      name="password"
+                      label="Password"
+                      placeholder="********"
+                      type="password"
+                    />
+                  </Grid>
+                  {errors.email && (
+                    <Typography color="red">{errors.email.message}</Typography>
+                  )}
+                  {errors.password && (
+                    <Typography color="red">{errors.password.message}</Typography>
+                  )}
+                  <Grid item sm={12}>
+                    <PrimaryButton>Submit</PrimaryButton>
+                  </Grid>
                 </Grid>
-                <Grid item sm={12}>
-                  <TextField
-                    label="Password"
-                    placeholder="********"
-                    name="password"
-                    type="password"
-                    size="small"
-                    fullWidth
-                    value={userData.password}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <PrimaryButton>
-                    Submit
-                  </PrimaryButton>
-                </Grid>
-              </Grid>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+              </form>
+            </FormProvider>
           </Grid>
         </Grid>
       </Grid>
