@@ -11,7 +11,7 @@ import { loginUser } from "../../../../store/features/userSlice";
 import { token } from "../../../../data-mock/data";
 import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
-import { LoginForm } from "./LoginForm";
+import { UserForm } from "../../../../components/ConnectForm/UserForm";
 
 export function Login() {
   const methods = useForm<UserLogin>({
@@ -74,7 +74,7 @@ export function Login() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={6}>
                   <Grid item sm={12}>
-                    <LoginForm
+                    <UserForm
                       name="email"
                       label="Email"
                       placeholder="email@gmail.com"
@@ -82,7 +82,7 @@ export function Login() {
                     />
                   </Grid>
                   <Grid item sm={12}>
-                    <LoginForm
+                    <UserForm
                       name="password"
                       label="Password"
                       placeholder="********"
@@ -90,10 +90,10 @@ export function Login() {
                     />
                   </Grid>
                   {errors.email && (
-                    <Typography color="red">{errors.email.message}</Typography>
+                    <Typography color="red" paddingLeft="48px">{errors.email.message}</Typography>
                   )}
                   {errors.password && (
-                    <Typography color="red">{errors.password.message}</Typography>
+                    <Typography color="red" paddingLeft="48px">{errors.password.message}</Typography>
                   )}
                   <Grid item sm={12}>
                     <PrimaryButton>Submit</PrimaryButton>
