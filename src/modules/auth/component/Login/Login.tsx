@@ -22,14 +22,12 @@ export function Login() {
   });
 
   const {
-    handleSubmit, setError, watch, formState: { errors },
+    handleSubmit, setError, formState: { errors },
   } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<UserLogin> = async (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
     const userExists = await users.getUserByEmail(
       data.email,
     );
@@ -49,14 +47,8 @@ export function Login() {
       dispatch(login(token));
       localStorage.setItem("user", JSON.stringify(updatedUserData));
       localStorage.setItem("token", token);
-
-      // eslint-disable-next-line no-console
-      console.log("Login successful");
     }
   };
-
-  // eslint-disable-next-line no-console
-  console.log(watch("email"));
 
   return (
     <Grid container justifyContent="flex-start" alignItems="center" spacing={6}>

@@ -2,7 +2,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
@@ -29,11 +28,6 @@ export function SignUp() {
   } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log("All Submitted Data:", users);
-  }, [users]);
 
   const onSubmit: SubmitHandler<Omit<Profile, "id">> = async (data) => {
     const userExists = await users.getUserByEmail(
