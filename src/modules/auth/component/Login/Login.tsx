@@ -35,9 +35,9 @@ export function Login() {
       }));
     }
   };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userExists = users.getUserByEmailAndPassword(userData.email, userData.password);
+    const userExists = await users.getUserByEmailAndPassword(userData.email, userData.password);
     if (userExists) {
       const updatedUserData = {
         email: userData.email,
