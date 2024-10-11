@@ -1,7 +1,8 @@
 import {
   Grid,
+  Typography,
 } from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
@@ -13,52 +14,43 @@ import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
 
 export function Login() {
-  const [userData, setUserData] = useState<UserLogin>({
-    email: "",
-    password: "",
+  const {
+    control, setError, handleSubmit, formState: { errors }, reset,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
-  const [error, setError] = useState<string>("");
+
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "email") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        email: value,
-      }));
-    } else if (name === "password") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        password: value,
-      }));
-    }
-  };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userExists = await users.getUserByEmailAndPassword(userData.email, userData.password);
-    if (userExists) {
+  const onSubmit: SubmitHandler<UserLogin> = async (data) => {
+    const userExists = await users.getUserByEmail(data.email);
+    const passwordMatch = await users.getUserByEmailAndPassword(data.email, data.password);
+    if (!userExists) {
+      setError("email", { type: "manual", message: "User with this email is not registered" });
+    } else if (userExists && !passwordMatch) {
+      setError("password", { type: "manual", message: "Incorrect password" });
+    } else {
       const updatedUserData = {
-        email: userData.email,
+        email: data.email,
       };
-      setError("");
       dispatch(loginUser(updatedUserData));
       dispatch(login(token));
       localStorage.setItem("user", JSON.stringify(updatedUserData));
       localStorage.setItem("token", token);
 
-      setUserData({
-        ...updatedUserData,
+      reset({
         email: "",
         password: "",
       });
       // eslint-disable-next-line no-console
       console.log("Login successful");
-    } else {
-      setError("Invalid email or password");
     }
   };
+
   return (
     <Grid
       container
@@ -76,33 +68,49 @@ export function Login() {
       >
         <Grid container spacing={2}>
           <Grid item sm={12}>
-
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={6}>
                 <Grid item sm={12}>
-                  <TextField
-                    label="Email"
-                    placeholder="email@gmail.com"
+                  <Controller
                     name="email"
-                    type="email"
-                    size="small"
-                    fullWidth
-                    value={userData.email}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Email is required" }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Email"
+                        placeholder="email@gmail.com"
+                        type="email"
+                        size="small"
+                        fullWidth
+                        {...field}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <TextField
-                    label="Password"
-                    placeholder="********"
+                  <Controller
                     name="password"
-                    type="password"
-                    size="small"
-                    fullWidth
-                    value={userData.password}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Password is required" }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Password"
+                        placeholder="********"
+                        type="password"
+                        size="small"
+                        fullWidth
+                        {...field}
+                      />
+                    )}
                   />
+
                 </Grid>
+                {errors.email && (
+                <Typography color="red" paddingLeft="48px">{errors.email.message}</Typography>
+                )}
+                {errors.password && (
+                <Typography color="red" paddingLeft="48px">{errors.password.message}</Typography>
+                )}
                 <Grid item sm={12}>
                   <PrimaryButton>
                     Submit
@@ -110,7 +118,6 @@ export function Login() {
                 </Grid>
               </Grid>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
           </Grid>
         </Grid>
       </Grid>
