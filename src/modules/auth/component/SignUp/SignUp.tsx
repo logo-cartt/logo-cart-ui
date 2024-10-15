@@ -1,58 +1,62 @@
+/* eslint-disable no-console */
 import {
   Grid,
+  Typography,
 } from "@mui/material";
-import {
-  ChangeEvent, FormEvent, useEffect, useState,
-} from "react";
+import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
 import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
-import { profileData, token } from "../../../../data-mock/data";
+import { token } from "../../../../data-mock/data";
 import { Profile } from "../../../../types/types";
 import { useAppDispatch } from "../../../../store/hooks";
 import { login } from "../../../../store/features/tokenSlice";
-import { UserRepository, userRepository } from "../../../../data-mock/userMock";
+import { User, UserRepository, userRepository } from "../../../../data-mock/userMock";
 
 export function SignUp() {
-  const [formData, setFormData] = useState<Omit<Profile, "id" | "isLoggedIn">>(
-    profileData,
-  );
+  const {
+    control, setError, handleSubmit, formState: { errors }, reset, getValues,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   useEffect(() => {
     // eslint-disable-next-line no-console
     console.log("All Submitted Data:", users);
   }, [users]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newFormData: Profile = {
-      id: uuidv4(),
-      ...formData,
-    };
-
-    await users.addUser(newFormData);
-    dispatch(login(token));
-    localStorage.setItem("user", JSON.stringify({ email: newFormData.email }));
-    localStorage.setItem("token", token);
-    setFormData(
-      {
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      },
-    );
+  const onSubmit: SubmitHandler<Omit<Profile, "id">> = async (data) => {
+    const userExists: User | null = await users.getUserByEmail(data.email);
+    if (userExists) {
+      setError("email", { type: "manual", message: "User with such email is already registered" });
+    } else {
+      const newFormData: Profile = {
+        id: uuidv4(),
+        ...data,
+      };
+      await users.addUser(newFormData);
+      dispatch(login(token));
+      localStorage.setItem("user", JSON.stringify({ email: newFormData.email }));
+      localStorage.setItem("token", token);
+      reset(
+        {
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        },
+      );
+    }
   };
 
   return (
@@ -74,54 +78,81 @@ export function SignUp() {
         <Grid container spacing={2}>
           <Grid item sm={12}>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={6}>
                 <Grid item xs={12}>
-                  <TextField
-                    label="Email"
-                    placeholder="email@gmail.com"
-                    type="email"
+                  <Controller
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Email is required", pattern: /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/ }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Email"
+                        placeholder="email@gmail.com"
+                        type="email"
+                        {...field}
+                      />
+                    )}
                   />
+
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    label="Seller name"
-                    placeholder="Seller name"
-                    type="text"
-                    size="small"
-                    fullWidth
+                  <Controller
                     name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Name is required" }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Seller name"
+                        placeholder="Seller name"
+                        type="text"
+                        {...field}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    label="Password"
-                    placeholder="********"
-                    type="password"
-                    size="small"
-                    fullWidth
+                  <Controller
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Password is required", minLength: { value: 8, message: "Password must be at least 8 characters long" } }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Password"
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    label="Confirm password"
-                    placeholder="********"
-                    type="password"
-                    size="small"
-                    fullWidth
+                  <Controller
                     name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
+                    control={control}
+                    rules={{ required: "Please confirm your password", validate: (value) => value === getValues("password") || "Passwords do not match" }}
+                    render={({ field }) => (
+                      <TextField
+                        label="Confirm password"
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    )}
                   />
                 </Grid>
+                {errors.email && (
+                <Typography color="red" paddingLeft="48px">{errors.email.message}</Typography>
+                )}
+                {errors.name && (
+                <Typography color="red" paddingLeft="48px">{errors.name.message}</Typography>
+                )}
+                {errors.password && (
+                <Typography color="red" paddingLeft="48px">{errors.password.message}</Typography>
+                )}
+                {errors.confirmPassword && (
+                <Typography color="red" paddingLeft="48px">{errors.confirmPassword.message}</Typography>
+                )}
                 <Grid item xs={12}>
                   <PrimaryButton>
                     Submit
