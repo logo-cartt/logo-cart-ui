@@ -20,8 +20,8 @@ export function PrimaryButton({ children, ...props }: Props) {
       type="submit"
       color="violet"
       variant="contained"
-      fullWidth
-      disableElevation
+      fullWidth={true}
+      disableElevation={true}
       {...props}
     >
       { children }

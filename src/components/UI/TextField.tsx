@@ -1,7 +1,16 @@
-import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
+import MuiTextField, { type TextFieldProps } from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
+import {
+  type FieldValues,
+  type FieldPath,
+  type UseControllerProps,
+  useController,
+} from "react-hook-form";
 
-type Props = TextFieldProps;
+type InputProps<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>,
+> = UseControllerProps<TFieldValues, TName> & TextFieldProps;
 
 const TextFieldStyled = styled(MuiTextField)({
   borderRadius: "5px",
@@ -13,13 +22,14 @@ const TextFieldStyled = styled(MuiTextField)({
     },
   },
 });
-export function TextField({ children, ...props }: Props) {
+export function TextField<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>,
+>({
+  control, name, rules, ...props
+}: InputProps<TFieldValues, TName>) {
+  const { field } = useController({ rules, control, name });
   return (
-    <TextFieldStyled
-      size="small"
-      fullWidth
-      {...props}
-    >
-    </TextFieldStyled>
+    <TextFieldStyled {...field} {...props} fullWidth={true} size="small" />
   );
 }

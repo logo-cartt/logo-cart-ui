@@ -44,7 +44,7 @@ export function HeaderNav() {
         label="T-shirt"
         size="small"
         type="search"
-        fullWidth
+        fullWidth={true}
         sx={{ width: "368px" }}
         InputProps={{
           endAdornment: (

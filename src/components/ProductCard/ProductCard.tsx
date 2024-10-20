@@ -59,7 +59,7 @@ export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
               onClick={() => onAddToCart(product)}
               variant="contained"
               color="violet"
-              fullWidth
+              fullWidth={true}
               sx={{ borderRadius: "0px 0px 5px 5px" }}
             >
               <Typography variant="body1" color="#fff">
