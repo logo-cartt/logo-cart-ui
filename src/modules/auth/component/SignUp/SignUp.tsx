@@ -2,9 +2,8 @@
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
-import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { token } from "../../../../data-mock/data";
 import { Profile } from "../../../../types/types";
@@ -15,11 +14,13 @@ import {
   UserRepository,
   userRepository,
 } from "../../../../data-mock/userMock";
+import EmailField from "../../../../components/UI/Fields/EmailField";
+import PasswordField from "../../../../components/UI/Fields/PasswordField";
+import ConfirmPasswordField from "../../../../components/UI/Fields/ConfirmPasswordField";
+import NameField from "../../../../components/UI/Fields/NameField";
 
 export function SignUp() {
-  const {
-    control, setError, formState, reset, getValues, ...form
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       name: "",
       email: "",
@@ -27,7 +28,10 @@ export function SignUp() {
       confirmPassword: "",
     },
   });
-  const { errors } = formState;
+
+  const {
+    setError, reset, getValues, ...form
+  } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
@@ -62,7 +66,12 @@ export function SignUp() {
   };
 
   return (
-    <Grid container={true} justifyContent="flex-start" alignItems="center" spacing={6}>
+    <Grid
+      container={true}
+      justifyContent="flex-start"
+      alignItems="center"
+      spacing={6}
+    >
       <Grid item={true} sm={8} lg={12}>
         <Heading align="left" padding="32px 0 0 0">
           Sign up
@@ -72,78 +81,27 @@ export function SignUp() {
       <Grid item={true} sm={5} lg={5}>
         <Grid container={true} spacing={2}>
           <Grid item={true} sm={12}>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
-              <Grid container={true} spacing={6}>
-                <Grid item={true} xs={12}>
-                  <TextField
-                    control={control}
-                    name="email"
-                    rules={{
-                      required: "Email is required",
-                      pattern: /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/,
-                    }}
-                    placeholder="email@gmail.com"
-                    label="Email"
-                    type="email"
-                    error={!!errors.email}
-                    helperText={errors.email ? errors.email.message : ""}
-                  />
+            <FormProvider {...methods}>
+              <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <Grid container={true} spacing={6}>
+                  <Grid item={true} xs={12}>
+                    <EmailField />
+                  </Grid>
+                  <Grid item={true} xs={12}>
+                    <NameField />
+                  </Grid>
+                  <Grid item={true} xs={12}>
+                    <PasswordField />
+                  </Grid>
+                  <Grid item={true} xs={12}>
+                    <ConfirmPasswordField getValues={getValues} />
+                  </Grid>
+                  <Grid item={true} xs={12}>
+                    <PrimaryButton>Submit</PrimaryButton>
+                  </Grid>
                 </Grid>
-                <Grid item={true} xs={12}>
-                  <TextField
-                    name="name"
-                    control={control}
-                    rules={{ required: "Name is required" }}
-                    label="Seller name"
-                    placeholder="Seller name"
-                    type="text"
-                    error={!!errors.name}
-                    helperText={errors.name ? errors.name.message : ""}
-                  />
-                </Grid>
-                <Grid item={true} xs={12}>
-                  <TextField
-                    name="password"
-                    control={control}
-                    rules={{
-                      required: "Password is required",
-                      minLength: {
-                        value: 8,
-                        message: "Password must be at least 8 characters long",
-                      },
-                    }}
-                    label="Password"
-                    placeholder="********"
-                    type="password"
-                    error={!!errors.password}
-                    helperText={errors.password ? errors.password.message : ""}
-                  />
-                </Grid>
-                <Grid item={true} xs={12}>
-                  <TextField
-                    name="confirmPassword"
-                    control={control}
-                    rules={{
-                      required: "Please confirm your password",
-                      validate: (value) => value === getValues("password")
-                        || "Passwords do not match",
-                    }}
-                    label="Confirm password"
-                    placeholder="********"
-                    type="password"
-                    error={!!errors.confirmPassword}
-                    helperText={
-                      errors.confirmPassword
-                        ? errors.confirmPassword.message
-                        : ""
-                    }
-                  />
-                </Grid>
-                <Grid item={true} xs={12}>
-                  <PrimaryButton>Submit</PrimaryButton>
-                </Grid>
-              </Grid>
-            </form>
+              </form>
+            </FormProvider>
           </Grid>
         </Grid>
       </Grid>

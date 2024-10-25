@@ -1,14 +1,20 @@
 import { Grid } from "@mui/material";
-import { SubmitHandler, useForm, DefaultValues } from "react-hook-form";
+import {
+  SubmitHandler,
+  useForm,
+  DefaultValues,
+  FormProvider,
+} from "react-hook-form";
 import { useAppDispatch } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
-import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { login } from "../../../../store/features/tokenSlice";
 import { loginUser } from "../../../../store/features/userSlice";
 import { token } from "../../../../data-mock/data";
 import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
+import EmailField from "../../../../components/UI/Fields/EmailField";
+import PasswordField from "../../../../components/UI/Fields/PasswordField";
 
 export type LoginForm = {
   email: string;
@@ -19,13 +25,12 @@ const defaultValues: DefaultValues<LoginForm> = {
   password: "",
 };
 export function Login() {
-  const {
-    control, setError, formState, reset, ...form
-  } = useForm<LoginForm>({
+  const methods = useForm<LoginForm>({
     defaultValues,
   });
-
-  const { errors } = formState;
+  const {
+    setError, reset, ...form
+  } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
@@ -65,7 +70,12 @@ export function Login() {
   };
 
   return (
-    <Grid container={true} justifyContent="flex-start" alignItems="center" spacing={6}>
+    <Grid
+      container={true}
+      justifyContent="flex-start"
+      alignItems="center"
+      spacing={6}
+    >
       <Grid item={true} sm={8} lg={12}>
         <Heading align="left" padding="32px 0 0 0">
           Login
@@ -75,37 +85,22 @@ export function Login() {
       <Grid item={true} sm={5}>
         <Grid container={true} spacing={2}>
           <Grid item={true} sm={12}>
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
-              <Grid container={true} spacing={6}>
-                <Grid item={true} sm={12}>
-                  <TextField
-                    name="email"
-                    control={control}
-                    rules={{ required: "Email is required" }}
-                    placeholder="email@gmail.com"
-                    label="Email"
-                    type="email"
-                    error={!!errors.email}
-                    helperText={errors.email ? errors.email.message : ""}
-                  />
+            {" "}
+            <FormProvider {...methods}>
+              <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <Grid container={true} spacing={6}>
+                  <Grid item={true} sm={12}>
+                    <EmailField />
+                  </Grid>
+                  <Grid item={true} sm={12}>
+                    <PasswordField />
+                  </Grid>
+                  <Grid item={true} sm={12}>
+                    <PrimaryButton>Submit</PrimaryButton>
+                  </Grid>
                 </Grid>
-                <Grid item={true} sm={12}>
-                  <TextField
-                    name="password"
-                    control={control}
-                    rules={{ required: "Password is required" }}
-                    label="Password"
-                    placeholder="********"
-                    type="password"
-                    error={!!errors.password}
-                    helperText={errors.password ? errors.password.message : ""}
-                  />
-                </Grid>
-                <Grid item={true} sm={12}>
-                  <PrimaryButton>Submit</PrimaryButton>
-                </Grid>
-              </Grid>
-            </form>
+              </form>
+            </FormProvider>
           </Grid>
         </Grid>
       </Grid>
