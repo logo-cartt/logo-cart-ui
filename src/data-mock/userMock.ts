@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   id: string;
   name: string;
   email: string;
@@ -11,8 +11,8 @@ const usersMock: User[] = [
     id: "1",
     name: "Azimkhan",
     email: "aabdulsatarov@gmail.com",
-    password: "123456",
-    confirmPassword: "123456",
+    password: "12345678",
+    confirmPassword: "12345678",
   },
 ];
 

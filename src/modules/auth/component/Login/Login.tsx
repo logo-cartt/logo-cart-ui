@@ -1,116 +1,106 @@
+import { Grid } from "@mui/material";
 import {
-  Grid,
-} from "@mui/material";
-import { ChangeEvent, FormEvent, useState } from "react";
+  SubmitHandler,
+  useForm,
+  DefaultValues,
+  FormProvider,
+} from "react-hook-form";
 import { useAppDispatch } from "../../../../store/hooks";
 import { PrimaryButton } from "../../../../components/UI/PrimaryButton";
-import { TextField } from "../../../../components/UI/TextField";
 import { Heading } from "../../../../components/UI/Heading";
 import { login } from "../../../../store/features/tokenSlice";
 import { loginUser } from "../../../../store/features/userSlice";
 import { token } from "../../../../data-mock/data";
 import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
+import EmailField from "../../../../components/UI/Fields/EmailField";
+import PasswordField from "../../../../components/UI/Fields/PasswordField";
 
+export type LoginForm = {
+  email: string;
+  password: string;
+};
+const defaultValues: DefaultValues<LoginForm> = {
+  email: "",
+  password: "",
+};
 export function Login() {
-  const [userData, setUserData] = useState<UserLogin>({
-    email: "",
-    password: "",
+  const methods = useForm<LoginForm>({
+    defaultValues,
   });
-  const [error, setError] = useState<string>("");
+  const {
+    setError, reset, ...form
+  } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "email") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        email: value,
-      }));
-    } else if (name === "password") {
-      setUserData((prevUserData: UserLogin) => ({
-        ...prevUserData,
-        password: value,
-      }));
-    }
-  };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userExists = users.getUserByEmailAndPassword(userData.email, userData.password);
-    if (userExists) {
-      const updatedUserData = {
-        email: userData.email,
-      };
-      setError("");
-      dispatch(loginUser(updatedUserData));
-      dispatch(login(token));
-      localStorage.setItem("user", JSON.stringify(updatedUserData));
-      localStorage.setItem("token", token);
-
-      setUserData({
-        ...updatedUserData,
-        email: "",
-        password: "",
+  const handleSubmit: SubmitHandler<UserLogin> = async (data) => {
+    const userExists = await users.getUserByEmail(data.email);
+    if (!userExists) {
+      setError("email", {
+        type: "manual",
+        message: "User with this email is not registered",
       });
-      // eslint-disable-next-line no-console
-      console.log("Login successful");
-    } else {
-      setError("Invalid email or password");
+      return;
     }
+
+    const passwordMatch = await users.getUserByEmailAndPassword(
+      data.email,
+      data.password,
+    );
+
+    if (!passwordMatch) {
+      setError("password", { type: "manual", message: "Incorrect password" });
+      return;
+    }
+    const updatedUserData = {
+      email: data.email,
+    };
+    dispatch(loginUser(updatedUserData));
+    dispatch(login(token));
+    localStorage.setItem("user", JSON.stringify(updatedUserData));
+    localStorage.setItem("token", token);
+
+    reset({
+      email: "",
+      password: "",
+    });
+    // eslint-disable-next-line no-console
+    console.log("Login successful");
   };
+
   return (
     <Grid
-      container
+      container={true}
       justifyContent="flex-start"
       alignItems="center"
       spacing={6}
     >
-      <Grid item sm={8} lg={12}>
-        <Heading align="left" padding="32px 0 0 0">Login</Heading>
+      <Grid item={true} sm={8} lg={12}>
+        <Heading align="left" padding="32px 0 0 0">
+          Login
+        </Heading>
       </Grid>
 
-      <Grid
-        item
-        sm={5}
-      >
-        <Grid container spacing={2}>
-          <Grid item sm={12}>
-
-            <form onSubmit={handleSubmit}>
-              <Grid container spacing={6}>
-                <Grid item sm={12}>
-                  <TextField
-                    label="Email"
-                    placeholder="email@gmail.com"
-                    name="email"
-                    type="email"
-                    size="small"
-                    fullWidth
-                    value={userData.email}
-                    onChange={handleChange}
-                  />
+      <Grid item={true} sm={5}>
+        <Grid container={true} spacing={2}>
+          <Grid item={true} sm={12}>
+            {" "}
+            <FormProvider {...methods}>
+              <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <Grid container={true} spacing={6}>
+                  <Grid item={true} sm={12}>
+                    <EmailField />
+                  </Grid>
+                  <Grid item={true} sm={12}>
+                    <PasswordField />
+                  </Grid>
+                  <Grid item={true} sm={12}>
+                    <PrimaryButton>Submit</PrimaryButton>
+                  </Grid>
                 </Grid>
-                <Grid item sm={12}>
-                  <TextField
-                    label="Password"
-                    placeholder="********"
-                    name="password"
-                    type="password"
-                    size="small"
-                    fullWidth
-                    value={userData.password}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item sm={12}>
-                  <PrimaryButton>
-                    Submit
-                  </PrimaryButton>
-                </Grid>
-              </Grid>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+              </form>
+            </FormProvider>
           </Grid>
         </Grid>
       </Grid>
