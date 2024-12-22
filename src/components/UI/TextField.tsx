@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import MuiTextField, { type TextFieldProps } from "@mui/material/TextField";
+import MuiTextField, { type TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import {
   type FieldValues,
@@ -10,10 +10,10 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 
-type InputProps<
+export type TextFieldProps<
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>,
-> = UseControllerProps<TFieldValues, TName> & Omit<TextFieldProps, "control">;
+> = UseControllerProps<TFieldValues, TName> & Omit<MuiTextFieldProps, "control">;
 
 const TextFieldStyled = styled(MuiTextField)({
   borderRadius: "5px",
@@ -30,7 +30,7 @@ export function TextField<
   TTransformedValues extends FieldValues | undefined,
   TName extends FieldPath<TFieldValues>,
   TContext = any,
->({ name, rules, ...props }: InputProps<TFieldValues, TName>) {
+>({ name, rules, ...props }: TextFieldProps<TFieldValues, TName>) {
   const { control } = useFormContext() as UseFormReturn<
   TFieldValues,
   TContext,

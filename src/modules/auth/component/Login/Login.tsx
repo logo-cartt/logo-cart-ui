@@ -93,7 +93,7 @@ export function Login() {
                     <EmailField />
                   </Grid>
                   <Grid item={true} sm={12}>
-                    <PasswordField />
+                    <PasswordField name="password" />
                   </Grid>
                   <Grid item={true} sm={12}>
                     <PrimaryButton>Submit</PrimaryButton>
