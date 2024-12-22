@@ -16,7 +16,7 @@ import {
 } from "../../../../data-mock/userMock";
 import EmailField from "../../../../components/UI/Fields/EmailField";
 import PasswordField from "../../../../components/UI/Fields/PasswordField";
-import ConfirmPasswordField from "../../../../components/UI/Fields/ConfirmPasswordField";
+// import ConfirmPasswordField from "../../../../components/UI/Fields/ConfirmPasswordField";
 import NameField from "../../../../components/UI/Fields/NameField";
 
 export function SignUp() {
@@ -91,10 +91,10 @@ export function SignUp() {
                     <NameField />
                   </Grid>
                   <Grid item={true} xs={12}>
-                    <PasswordField />
+                    <PasswordField name="password" />
                   </Grid>
                   <Grid item={true} xs={12}>
-                    <ConfirmPasswordField getValues={getValues} />
+                    <PasswordField name="confirmPassword" />
                   </Grid>
                   <Grid item={true} xs={12}>
                     <PrimaryButton>Submit</PrimaryButton>
