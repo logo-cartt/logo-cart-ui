@@ -16,7 +16,6 @@ import {
 } from "../../../../data-mock/userMock";
 import EmailField from "../../../../components/UI/Fields/EmailField";
 import PasswordField from "../../../../components/UI/Fields/PasswordField";
-// import ConfirmPasswordField from "../../../../components/UI/Fields/ConfirmPasswordField";
 import NameField from "../../../../components/UI/Fields/NameField";
 
 export function SignUp() {

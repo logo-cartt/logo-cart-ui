@@ -3,7 +3,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 import { GlobalStyleWrapper } from "../GlobalStyleWrapper";
 // import { LoginPage } from "../../modules/auth/page/LoginPage";
-import { SignUpPage } from "../../modules/auth/page/SignUpPage";
+// import { SignUpPage } from "../../modules/auth/page/SignUpPage";
+import { ProductDetailPage } from "../../modules/main/page/ProductDetailPage";
 // import { MainPage } from "../../modules/main/page/MainPage";
 
 export function App() {
@@ -14,7 +15,8 @@ export function App() {
         <ThemeProvider theme={theme}>
           {/* <MainPage /> */}
           {/* <LoginPage /> */}
-          <SignUpPage />
+          <ProductDetailPage />
+          {/* <SignUpPage /> */}
         </ThemeProvider>
       </GlobalStyleWrapper>
     </>

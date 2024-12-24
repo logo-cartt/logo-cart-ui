@@ -33,7 +33,7 @@ export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
     <Card sx={{ maxWidth: 255, border: "1px solid #777777" }}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="t-shirt"
         height="211"
         image="src\assets\img\t-shirt.png"
       />
@@ -60,9 +60,9 @@ export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
               variant="contained"
               color="violet"
               fullWidth={true}
-              sx={{ borderRadius: "0px 0px 5px 5px" }}
+              sx={{ borderRadius: "0px 0px 5px 5px", textTransform: "none" }}
             >
-              <Typography variant="body1" color="#fff">
+              <Typography variant="body1" color="#fff" textTransform="none">
                 + Add to cart
               </Typography>
             </Button>
@@ -73,6 +73,7 @@ export function ProductCard({ product, onAddToCart, onRemoveFromCart }: Props) {
               onAddProduct={onAddToCart}
               numberOfItems={numberOfItems}
               product={product}
+              pageType="main"
             />
           )}
       </CardContent>
