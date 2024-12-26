@@ -1,5 +1,5 @@
 import {
-  Box, Button, Grid, Typography,
+  Box, Button, Grid, TextField, Typography,
 } from "@mui/material";
 import { useAppSelector } from "../../../../store/hooks";
 import { products } from "../../../../data-mock/data";
@@ -97,7 +97,7 @@ export function ProductDetail() {
         >
           Description
         </Typography>
-        <Typography variant="body1" component="p" textAlign="left" margin="32px 0" lineHeight="1.21rem">
+        <Typography variant="body1" textAlign="left" margin="32px 0" lineHeight="1.21rem">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           Dignissim enim sit amet venenatis urna cursus. Odio aenean sed
@@ -122,7 +122,7 @@ export function ProductDetail() {
           velit ut tortor pretium viverra suspendisse potenti nullam ac. Posuere ac
           ut consequat semper viverra nam libero justo laoreet. Rhoncus dolor purus non enim.
         </Typography>
-        <Typography variant="body1" component="p" textAlign="left" lineHeight="1.21rem">
+        <Typography variant="body1" textAlign="left" lineHeight="1.21rem">
           Magna fringilla urna porttitor rhoncus dolor. Bibendum ut tristique
           et egestas. Aliquet eget sit amet tellus cras adipiscing enim. Eget
           mauris pharetra et ultrices. Laoreet sit amet cursus sit amet dictum
@@ -153,6 +153,94 @@ export function ProductDetail() {
           vulputate mi sit amet. Vel pretium lectus quam id leo in.
           Tempus quam pellentesque nec nam. Lectus proin nibh nisl condimentum id venenatis a.
         </Typography>
+      </Box>
+      <Box margin="64px 0">
+
+        <Typography
+          variant="h5"
+          fontSize="1.8125rem"
+          fontWeight="600"
+          align="left"
+        >
+          Comments
+        </Typography>
+        <Box margin="32px 0">
+          <Typography variant="body1" fontWeight="600" textAlign="left" mb="8px">John Terry</Typography>
+          <Typography variant="body1" fontSize="0.875rem" textAlign="left" color="#777">Rated: 5 out of 5</Typography>
+          <Typography variant="body1" component="p" textAlign="left" margin="16px 0 32px" lineHeight="1.21rem">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Dignissim enim sit
+            amet venenatis urna cursus. Odio aenean sed adipiscing diam donec adipiscing
+            tristique risus nec. Mi sit amet mauris commodo quis imperdiet. Sed viverra
+            ipsum nunc aliquet bibendum enim. Ullamcorper eget nulla facilisi etiam.
+            Id porta nibh venenatis cras sed. Tellus cras adipiscing enim eu turpis
+            egestas pretium. Tincidunt eget nullam non nisi est sit amet facilisis
+            magna. Dui faucibus in ornare quam. Ullamcorper eget nulla facilisi etiam
+            dignissim. In tellus integer feugiat scelerisque varius morbi enim. Luctus
+            accumsan tortor posuere ac ut consequat.
+          </Typography>
+        </Box>
+        <Box margin="32px 0">
+          <Typography variant="body1" fontWeight="600" textAlign="left" mb="8px">Frank Lampard</Typography>
+          <Typography variant="body1" fontSize="0.875rem" textAlign="left" color="#777">Rated: 4 out of 5</Typography>
+          <Typography variant="body1" component="p" textAlign="left" margin="16px 0 32px" lineHeight="1.21rem">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Dignissim enim sit
+            amet venenatis urna cursus. Odio aenean sed adipiscing diam donec adipiscing
+            tristique risus nec. Mi sit amet mauris commodo quis imperdiet. Sed viverra
+            ipsum nunc aliquet bibendum enim. Ullamcorper eget nulla facilisi etiam.
+            Id porta nibh venenatis cras sed. Tellus cras adipiscing enim eu turpis
+            egestas pretium. Tincidunt eget nullam non nisi est sit amet facilisis
+            magna. Dui faucibus in ornare quam. Ullamcorper eget nulla facilisi etiam
+            dignissim. In tellus integer feugiat scelerisque varius morbi enim. Luctus
+            accumsan tortor posuere ac ut consequat.
+          </Typography>
+        </Box>
+        <Grid container={true} maxWidth="890px" flexDirection="column">
+          <Grid item={true} xs={6}>
+
+            <Typography variant="body1" fontSize="0.875rem" textAlign="left" lineHeight="1.25rem">Leave a comment</Typography>
+            <Box borderRadius="5px">
+              <TextField
+                multiline={true}
+                fullWidth={true}
+                minRows={5}
+                placeholder="Comment"
+                InputProps={{
+                  style: {
+                    padding: "8px",
+                  },
+                }}
+                sx={{
+                  "& .MuiInputBase-input::placeholder": {
+                    color: "#000",
+                    opacity: 1,
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused": {
+                      outline: "none", // Focus border color
+                    },
+                  },
+                }}
+              >
+              </TextField>
+            </Box>
+          </Grid>
+          <Grid item={true} xs={6} mt={4}>
+            <Button
+              // eslint-disable-next-line no-console
+              onClick={() => console.log("submitted")}
+              variant="contained"
+              color="violet"
+              fullWidth={true}
+              sx={{ borderRadius: "5px" }}
+            >
+              <Typography variant="h6" fontSize="1.125rem" fontWeight="600" color="#fff" textTransform="none">
+                Submit
+              </Typography>
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );
