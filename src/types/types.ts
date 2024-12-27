@@ -10,6 +10,11 @@ export type Product = {
   ranking: number;
   reviews: number;
   price: number;
+  image: string;
+  seller: string;
+  deliveryTime: string;
+  deliveryPrice: string;
+  quantity: number;
 };
 
 export type Profile = {

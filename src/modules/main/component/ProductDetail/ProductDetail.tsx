@@ -1,25 +1,9 @@
 import {
   Box, Button, Grid, TextField, Typography,
 } from "@mui/material";
-import { useAppSelector } from "../../../../store/hooks";
-import { products } from "../../../../data-mock/data";
-import { ProductCardItemCounter } from "../../../../components/ProductCard/ProductCardItemCounter";
-import { useProductCard } from "../../../../components/ProductCard/useProductCard";
-// import { products } from "../../../../data-mock/data";
+import { ProductDetailCard } from "../../../../components/Product/ProductDetail/ProductDetailCard";
 
 export function ProductDetail() {
-  const { onAddToCart, onRemoveFromCart } = useProductCard();
-  const { cartItems } = useAppSelector((state) => state.cart);
-  const {
-    id,
-  } = products[0];
-  const selectedItem = cartItems.find((cartItem) => cartItem.product.id === id);
-  const numberOfItems = selectedItem?.quantity || 0;
-
-  const handleClick = () => {
-    onRemoveFromCart(id);
-  };
-
   return (
     <Box marginTop="32px">
       <Typography
@@ -30,63 +14,7 @@ export function ProductDetail() {
       >
         T-Shirt. Blue.
       </Typography>
-      <Grid container={true} mt="30px" spacing={2}>
-        <Grid
-          item={true}
-          sx={{ backgroundColor: "#D9D9D9", maxWidth: "635px" }}
-        >
-          <img src="src\assets\img\t-shirt.png" alt="tshirt" height="524" />
-        </Grid>
-        <Grid item={true} sx={{ minWidth: "400px", minHeight: "100%" }}>
-          <Grid container={true} flexDirection="column" paddingLeft="30px" justifyContent="space-between" height="100%">
-            <Grid item={true} textAlign="left">
-              <Typography
-                variant="body1"
-                fontSize="1.5rem"
-                marginBottom="16px"
-              >
-                Seller: ClothesShop
-              </Typography>
-              <Typography
-                variant="body1"
-                fontSize="1.5rem"
-                marginBottom="16px"
-              >
-                Delivery: 1 day, free.
-              </Typography>
-              <Typography variant="body1" fontSize="1.5rem">
-                Left in stock: 26
-              </Typography>
-            </Grid>
-            <Grid item={true} textAlign="left">
-              <Typography fontSize="1.5rem" mb="32px">Total: $67.96</Typography>
-              {numberOfItems === 0
-
-                ? (
-                  <Button
-                    onClick={() => onAddToCart(products[0])}
-                    variant="contained"
-                    color="violet"
-                    fullWidth={true}
-                    sx={{ borderRadius: "5px", height: "54px" }}
-                  >
-                    <Typography variant="body1" color="#fff" textTransform="none">
-                      + Add to cart
-                    </Typography>
-                  </Button>
-                )
-                : (
-                  <ProductCardItemCounter
-                    onClickEvent={handleClick}
-                    onAddProduct={onAddToCart}
-                    numberOfItems={numberOfItems}
-                    product={products[0]}
-                  />
-                )}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+      <ProductDetailCard />
       <Box margin="64px 0">
 
         <Typography

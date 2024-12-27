@@ -1,10 +1,10 @@
 import {
   Box, Grid, Stack,
 } from "@mui/material";
-import { ProductCard } from "../../../../components/ProductCard";
+import { ProductCard } from "../../../../components/Product/ProductCard";
 import { Heading } from "../../../../components/UI/Heading";
 import { categoryNames, products } from "../../../../data-mock/data";
-import { useProductCard } from "../../../../components/ProductCard/useProductCard";
+import { useProductCard } from "../../../../components/Product/useProductCard";
 
 export function Categories() {
   const { onAddToCart, onRemoveFromCart } = useProductCard();
