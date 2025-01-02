@@ -4,10 +4,10 @@ import {
 import { ProductCard } from "../../../../components/Product/ProductCard";
 import { Heading } from "../../../../components/UI/Heading";
 import { categoryNames, products } from "../../../../data-mock/data";
-import { useProductCard } from "../../../../components/Product/useProductCard";
+// import { useProductCard } from "../../../../components/Product/useProductCard";
 
 export function Categories() {
-  const { onAddToCart, onRemoveFromCart } = useProductCard();
+  // const { onAddToCart, onRemoveFromCart } = useProductCard();
   return (
     <Box>
       <Stack alignItems="start" padding="0px">
@@ -28,8 +28,8 @@ export function Categories() {
                     <Grid item={true} xs={12} sm={6} md={4} lg={3} key={product.id}>
                       <ProductCard
                         product={product}
-                        onAddToCart={onAddToCart}
-                        onRemoveFromCart={onRemoveFromCart}
+                        // onAddToCart={onAddToCart}
+                        // onRemoveFromCart={onRemoveFromCart}
                       />
                     </Grid>
                   );

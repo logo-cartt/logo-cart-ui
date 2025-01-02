@@ -51,7 +51,7 @@ export function ProductDetailCard() {
               $
               {total}
             </ProductTypography>
-            <ProductButton numberOfItems={numberOfItems} borderRadius="5px" height="54px" />
+            <ProductButton id={id} product={products[0]} numberOfItems={numberOfItems} borderRadius="5px" height="54px" />
           </Grid>
         </Grid>
       </Grid>

@@ -1,18 +1,19 @@
-import { products } from "../../../data-mock/data";
 import { useProductCard } from "../useProductCard";
 import { ProductCounter } from "./ProductCounter";
 import { AddButton } from "../../UI/AddButton";
+import { Product } from "../../../types/types";
 
 type Props = {
+  id: number;
+  product: Product;
   numberOfItems: number;
   borderRadius: string;
   height: string;
 };
 
-export default function ProductButton({ numberOfItems, borderRadius, height }: Props) {
-  const {
-    id,
-  } = products[0];
+export default function ProductButton({
+  id, product, numberOfItems, borderRadius, height,
+}: Props) {
   const { onAddToCart, onRemoveFromCart } = useProductCard();
   const handleClick = () => {
     onRemoveFromCart(id);
@@ -24,7 +25,7 @@ export default function ProductButton({ numberOfItems, borderRadius, height }: P
 
         ? (
           <AddButton
-            onClick={() => onAddToCart(products[0])}
+            onClick={() => onAddToCart(product)}
             sx={{ borderRadius, textTransform: "none", height }}
           >
             + Add to cart
@@ -35,7 +36,7 @@ export default function ProductButton({ numberOfItems, borderRadius, height }: P
             onClickEvent={handleClick}
             onAddProduct={onAddToCart}
             numberOfItems={numberOfItems}
-            product={products[0]}
+            product={product}
             height={height}
           />
         )}

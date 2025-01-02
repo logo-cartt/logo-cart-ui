@@ -46,7 +46,7 @@ export function ProductCard({ product }: Props) {
           </Typography>
         </Stack>
 
-        <ProductButton numberOfItems={numberOfItems} borderRadius="0px 0px 5px 5px" height="34px" />
+        <ProductButton id={id} product={product} numberOfItems={numberOfItems} borderRadius="0px 0px 5px 5px" height="34px" />
 
       </CardContent>
     </Card>
