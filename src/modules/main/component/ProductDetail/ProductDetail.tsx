@@ -14,6 +14,7 @@ export function ProductDetail() {
   const [newComments, setNewComments] = useState(comments);
   const [trigger, setTrigger] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
+  const [ratingValue, setRatingValue] = useState<number | null>(0);
 
   const handleAddComment = async () => {
     const userData = localStorage.getItem("user");
@@ -28,13 +29,13 @@ export function ProductDetail() {
     }
 
     const userName = userExists?.name;
-    if (!newCommentText.trim()) {
+    if (!newCommentText.trim() || ratingValue === 0) {
       return;
     }
 
     const newComment = {
       client: userName,
-      rating: 5,
+      rating: ratingValue,
       commentText: newCommentText,
     };
 
@@ -82,12 +83,15 @@ export function ProductDetail() {
         >
           Comments
         </Typography>
-        <Box>
+        <Box mb={8}>
           {newComments ? newComments.map((newComment) => <ProductComment commentProp={newComment} />) : ""}
         </Box>
         <ProductNewComment
           onAddComment={handleAddComment}
+          newCommentText={newCommentText}
           onSetNewCommentText={setNewCommentText}
+          ratingValue={ratingValue}
+          onSetRatingValue={setRatingValue}
         />
       </Box>
     </Box>

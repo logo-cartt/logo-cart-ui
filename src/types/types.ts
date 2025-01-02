@@ -5,7 +5,7 @@ export type Category = {
 
 export type Comment = {
   client: string;
-  rating: number;
+  rating: number | null;
   commentText: string;
 };
 
