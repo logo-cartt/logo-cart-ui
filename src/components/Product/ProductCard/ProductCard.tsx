@@ -10,13 +10,14 @@ import { useAppSelector } from "../../../store/hooks";
 import ProductButton from "../ProductButton/ProductButton";
 
 type Props = {
+  children: React.ReactNode;
   product: Product;
 };
 
-export function ProductCard({ product }: Props) {
+export function ProductCard({ children, product }: Props) {
   const { cartItems } = useAppSelector((state) => state.cart);
   const {
-    id, group, name, price, ranking, reviews, image,
+    id, group, name, ranking, reviews, image,
   } = product;
 
   const selectedItem = cartItems.find((cartItem) => cartItem.product.id === id);
@@ -41,9 +42,7 @@ export function ProductCard({ product }: Props) {
           <Typography variant="body1" color="text.secondary">
             {`${ranking} (${reviews} reviews)`}
           </Typography>
-          <Typography variant="h5" fontSize="1.125rem" fontWeight="600">
-            {`$${price}`}
-          </Typography>
+          {children}
         </Stack>
 
         <ProductButton id={id} product={product} numberOfItems={numberOfItems} borderRadius="0px 0px 5px 5px" height="34px" />
