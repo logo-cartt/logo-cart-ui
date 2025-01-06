@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box, Typography,
 } from "@mui/material";
@@ -10,9 +10,8 @@ import ProductNewComment from "../../../../components/Product/ProductDetail/Prod
 import { userRepository } from "../../../../data-mock/userMock";
 
 export function ProductDetail() {
-  const { description, comments } = products[0];
-  const [newComments, setNewComments] = useState(comments);
-  const [trigger, setTrigger] = useState(false);
+  const { description, comments: initialComments } = products[0];
+  const [comments, setComments] = useState(initialComments || []);
   const [newCommentText, setNewCommentText] = useState("");
   const [ratingValue, setRatingValue] = useState<number | null>(0);
 
@@ -39,15 +38,14 @@ export function ProductDetail() {
       commentText: newCommentText,
     };
 
-    comments?.push(newComment);
-
+    console.log(comments);
+    setComments([...comments, newComment]);
     setNewCommentText("");
-    setTrigger((prev) => !prev);
   };
 
-  useEffect(() => {
-    setNewComments([...comments as []]);
-  }, [comments, trigger]);
+  // useEffect(() => {
+  //   setNewComments([...initialComments as []]);
+  // }, [initialComments, trigger]);
   return (
     <Box marginTop="32px">
       <Typography
@@ -84,7 +82,7 @@ export function ProductDetail() {
           Comments
         </Typography>
         <Box mb={8}>
-          {newComments ? newComments.map((newComment) => <ProductComment commentProp={newComment} />) : ""}
+          {comments ? comments.map((comment) => <ProductComment commentProp={comment} />) : ""}
         </Box>
         <ProductNewComment
           onAddComment={handleAddComment}
