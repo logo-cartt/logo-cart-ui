@@ -69,9 +69,8 @@ export function SignUp() {
       container={true}
       justifyContent="flex-start"
       alignItems="center"
-      spacing={6}
     >
-      <Grid item={true} sm={8} lg={12}>
+      <Grid item={true} sm={8} lg={12} pb={6}>
         <Heading align="left" padding="32px 0 0 0">
           Sign up
         </Heading>

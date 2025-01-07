@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import { Grid, Link } from "@mui/material";
+import { Link as RouterLink } from "react-router";
 import {
   SubmitHandler,
   useForm,
@@ -74,9 +75,8 @@ export function Login() {
       container={true}
       justifyContent="flex-start"
       alignItems="center"
-      spacing={6}
     >
-      <Grid item={true} sm={8} lg={12}>
+      <Grid item={true} sm={8} lg={12} pb={6}>
         <Heading align="left" padding="32px 0 0 0">
           Login
         </Heading>
@@ -101,6 +101,23 @@ export function Login() {
                 </Grid>
               </form>
             </FormProvider>
+          </Grid>
+          <Grid item={true} sm={12}>
+            Don&#39;t have account?
+            {" "}
+            <Link
+              component={RouterLink}
+              to="/signup"
+              sx={{
+                textDecoration: "none",
+                fontWeight: "600",
+                "&:hover": {
+                  color: "#747bff",
+                },
+              }}
+            >
+              Sign-up
+            </Link>
           </Grid>
         </Grid>
       </Grid>

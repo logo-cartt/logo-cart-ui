@@ -1,17 +1,22 @@
 import {
   Stack,
-  Link,
+  Link as MuiLink,
+  LinkProps as MuiLinkProps,
   TextField,
   InputAdornment,
   Typography,
   Button,
 } from "@mui/material";
+import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../store/features/tokenSlice";
 
-const LinkStyled = styled(Link)({
+type StyledLinkProps = MuiLinkProps & RouterLinkProps;
+const LinkStyled = styled(MuiLink)<StyledLinkProps>({
+  textDecoration: "none",
+  fontWeight: "bold",
   "&:hover": {
     color: "#747bff",
   },
@@ -32,14 +37,13 @@ export function HeaderNav() {
 
   return (
     <Stack spacing={3} direction="row" alignItems="center">
-      <Link
-        href="/#"
-        underline="none"
-        fontWeight="bold"
+      <LinkStyled
+        component={RouterLink}
+        to="/"
         sx={{ paddingRight: "77px" }}
       >
         Categories
-      </Link>
+      </LinkStyled>
       <TextField
         label="T-shirt"
         size="small"
@@ -62,15 +66,18 @@ export function HeaderNav() {
           Logout
         </Button>
       ) : (
-        <LinkStyled href="/#" underline="none" fontWeight="bold">
+        <LinkStyled
+          component={RouterLink}
+          to="/login"
+        >
           Login
         </LinkStyled>
       )}
 
-      <LinkStyled href="/#" underline="none" fontWeight="bold">
+      <LinkStyled component={RouterLink} to="/">
         Favourite
       </LinkStyled>
-      <LinkStyled href="/#" underline="none" fontWeight="bold">
+      <LinkStyled component={RouterLink} to="/cart">
         Cart
         <Typography
           component="span"
