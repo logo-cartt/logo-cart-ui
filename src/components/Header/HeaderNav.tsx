@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router";
+import { Link as RouterLink, LinkProps as RouterLinkProps, useNavigate, useSearchParams } from "react-router";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -23,17 +23,25 @@ const LinkStyled = styled(MuiLink)<StyledLinkProps>({
 });
 
 export function HeaderNav() {
+  const dispatch = useAppDispatch();
+  const [search, setSearch] = useSearchParams();
+  let navigate = useNavigate();
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   const isAuthenticated = useAppSelector(
     (state) => state.token.isAuthenticated,
   );
-  const dispatch = useAppDispatch();
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch({ product: event.target.value })
+    setTimeout(() => navigate(`/search?product=${event.target.value || ""}`), 1500);
+  }
 
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
+
 
   return (
     <Stack spacing={3} direction="row" alignItems="center">
@@ -49,6 +57,8 @@ export function HeaderNav() {
         size="small"
         type="search"
         fullWidth={true}
+        onChange={handleSearch}
+        value={search.get("product") as string}
         sx={{ width: "368px" }}
         InputProps={{
           endAdornment: (

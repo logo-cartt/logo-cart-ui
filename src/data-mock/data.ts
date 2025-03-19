@@ -18,7 +18,7 @@ export const categoryNames: Category[] = [
 export const products: Product[] = [
   {
     id: 1,
-    name: "T-Shirt. Blue",
+    name: "T-Shirt. Red",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -45,7 +45,7 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: "T-Shirt. Blue",
+    name: "T-Shirt. Red",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,
@@ -58,7 +58,7 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    name: "T-Shirt. Blue",
+    name: "T-Shirt. Green",
     group: "Clothes",
     ranking: 4.8,
     reviews: 11285,

@@ -16,6 +16,7 @@ import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
 import EmailField from "../../../../components/UI/Fields/EmailField";
 import PasswordField from "../../../../components/UI/Fields/PasswordField";
+import { useNavigate } from "react-router";
 
 export type LoginForm = {
   email: string;
@@ -26,6 +27,7 @@ const defaultValues: DefaultValues<LoginForm> = {
   password: "",
 };
 export function Login() {
+  let navigate = useNavigate();
   const methods = useForm<LoginForm>({
     defaultValues,
   });
@@ -66,6 +68,7 @@ export function Login() {
       email: "",
       password: "",
     });
+    navigate("/");
     // eslint-disable-next-line no-console
     console.log("Login successful");
   };
