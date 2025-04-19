@@ -25,13 +25,6 @@ export function App() {
               <Route path="cart" element={<CartPage />} />
               <Route path="search" element={<SearchPage />} />
             </Routes>
-
-            {/* <MainPage /> */}
-            {/* <LoginPage /> */}
-            {/* <ProductDetailPage /> */}
-            {/* <CartPage /> */}
-            {/* <SignUpPage /> */}
-            {/* <SearchPage /> */}
           </BrowserRouter>
         </ThemeProvider>
       </GlobalStyleWrapper>

@@ -4,7 +4,12 @@ import { HeaderNav } from "./HeaderNav";
 
 export function Header() {
   return (
-    <Stack direction="row" alignItems="center" justifyContent="space-between" padding="14px 19px">
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      padding="14px 19px"
+    >
       <Heading color="secondary" fontWeight="bold">
         LogoCart
       </Heading>

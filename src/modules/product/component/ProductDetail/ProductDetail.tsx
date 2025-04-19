@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import { useState } from "react";
-import {
-  Box, Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ProductDetailCard } from "../../../../components/Product/ProductDetail/ProductDetailCard";
 import { products } from "../../../../data-mock/data";
 import { ProductComment } from "../../../../components/Product/ProductDetail/ProductComment";
@@ -43,22 +41,13 @@ export function ProductDetail() {
     setNewCommentText("");
   };
 
-  // useEffect(() => {
-  //   setNewComments([...initialComments as []]);
-  // }, [initialComments, trigger]);
   return (
     <Box marginTop="32px">
-      <Typography
-        variant="h5"
-        fontSize="1.5rem"
-        fontWeight="600"
-        align="left"
-      >
+      <Typography variant="h5" fontSize="1.5rem" fontWeight="600" align="left">
         T-Shirt. Blue.
       </Typography>
       <ProductDetailCard />
       <Box margin="64px 0">
-
         <Typography
           variant="h5"
           fontSize="1.8125rem"
@@ -67,12 +56,17 @@ export function ProductDetail() {
         >
           Description
         </Typography>
-        <Typography variant="body1" textAlign="left" margin="32px 0" lineHeight="1.21rem" whiteSpace="pre-wrap">
+        <Typography
+          variant="body1"
+          textAlign="left"
+          margin="32px 0"
+          lineHeight="1.21rem"
+          whiteSpace="pre-wrap"
+        >
           {description}
         </Typography>
       </Box>
       <Box margin="64px 0">
-
         <Typography
           variant="h5"
           fontSize="1.8125rem"
@@ -82,7 +76,11 @@ export function ProductDetail() {
           Comments
         </Typography>
         <Box mb={8}>
-          {comments ? comments.map((comment) => <ProductComment commentProp={comment} />) : ""}
+          {comments
+            ? comments.map((comment) => (
+                <ProductComment commentProp={comment} />
+              ))
+            : ""}
         </Box>
         <ProductNewComment
           onAddComment={handleAddComment}

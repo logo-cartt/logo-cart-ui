@@ -7,11 +7,18 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Link as RouterLink, LinkProps as RouterLinkProps, useNavigate, useSearchParams } from "react-router";
+import {
+  Link as RouterLink,
+  LinkProps as RouterLinkProps,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../store/features/tokenSlice";
+import { routes } from "../../constants/route.constants";
+import { useState } from "react";
 
 type StyledLinkProps = MuiLinkProps & RouterLinkProps;
 const LinkStyled = styled(MuiLink)<StyledLinkProps>({
@@ -25,16 +32,28 @@ const LinkStyled = styled(MuiLink)<StyledLinkProps>({
 export function HeaderNav() {
   const dispatch = useAppDispatch();
   const [search, setSearch] = useSearchParams();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const totalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   const isAuthenticated = useAppSelector(
-    (state) => state.token.isAuthenticated,
+    (state) => state.token.isAuthenticated
   );
+  const [inputValue, setInputValue] = useState(search.get("product") || "");
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch({ product: event.target.value })
-    setTimeout(() => navigate(`/search?product=${event.target.value || ""}`), 1500);
-  }
+  const handleSearch = () => {
+    setSearch({ product: inputValue });
+    navigate(`/search?product=${inputValue}`);
+  };
+
+  const handleSubmit = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSearch();
+    }
+  };
+
+  const handleClick = () => {
+    handleSearch();
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -42,12 +61,11 @@ export function HeaderNav() {
     localStorage.removeItem("token");
   };
 
-
   return (
     <Stack spacing={3} direction="row" alignItems="center">
       <LinkStyled
         component={RouterLink}
-        to="/"
+        to={routes.Home}
         sx={{ paddingRight: "77px" }}
       >
         Categories
@@ -57,13 +75,19 @@ export function HeaderNav() {
         size="small"
         type="search"
         fullWidth={true}
-        onChange={handleSearch}
-        value={search.get("product") as string}
-        sx={{ width: "368px" }}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleSubmit}
+        value={inputValue}
+        sx={{
+          width: "368px",
+          "& .MuiOutlinedInput-root": { paddingRight: "0px" },
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <SearchIcon />
+              <Button onClick={handleClick}>
+                <SearchIcon />
+              </Button>
             </InputAdornment>
           ),
         }}
@@ -76,18 +100,15 @@ export function HeaderNav() {
           Logout
         </Button>
       ) : (
-        <LinkStyled
-          component={RouterLink}
-          to="/login"
-        >
+        <LinkStyled component={RouterLink} to={routes.Login}>
           Login
         </LinkStyled>
       )}
 
-      <LinkStyled component={RouterLink} to="/">
+      <LinkStyled component={RouterLink} to={routes.Home}>
         Favourite
       </LinkStyled>
-      <LinkStyled component={RouterLink} to="/cart">
+      <LinkStyled component={RouterLink} to={routes.Cart}>
         Cart
         <Typography
           component="span"

@@ -1,5 +1,5 @@
 import { Grid, Link } from "@mui/material";
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink, useNavigate } from "react-router";
 import {
   SubmitHandler,
   useForm,
@@ -16,7 +16,7 @@ import { UserLogin } from "../../../../types/types";
 import { UserRepository, userRepository } from "../../../../data-mock/userMock";
 import EmailField from "../../../../components/UI/Fields/EmailField";
 import PasswordField from "../../../../components/UI/Fields/PasswordField";
-import { useNavigate } from "react-router";
+import { routes } from "../../../../constants/route.constants";
 
 export type LoginForm = {
   email: string;
@@ -27,13 +27,11 @@ const defaultValues: DefaultValues<LoginForm> = {
   password: "",
 };
 export function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const methods = useForm<LoginForm>({
     defaultValues,
   });
-  const {
-    setError, reset, ...form
-  } = methods;
+  const { setError, reset, ...form } = methods;
   const users: UserRepository = userRepository;
   const dispatch = useAppDispatch();
 
@@ -49,7 +47,7 @@ export function Login() {
 
     const passwordMatch = await users.getUserByEmailAndPassword(
       data.email,
-      data.password,
+      data.password
     );
 
     if (!passwordMatch) {
@@ -74,11 +72,7 @@ export function Login() {
   };
 
   return (
-    <Grid
-      container={true}
-      justifyContent="flex-start"
-      alignItems="center"
-    >
+    <Grid container={true} justifyContent="flex-start" alignItems="center">
       <Grid item={true} sm={8} lg={12} pb={6}>
         <Heading align="left" padding="32px 0 0 0">
           Login
@@ -106,11 +100,10 @@ export function Login() {
             </FormProvider>
           </Grid>
           <Grid item={true} sm={12}>
-            Don&#39;t have account?
-            {" "}
+            Don&#39;t have account?{" "}
             <Link
               component={RouterLink}
-              to="/signup"
+              to={routes.SignUp}
               sx={{
                 textDecoration: "none",
                 fontWeight: "600",
