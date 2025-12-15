@@ -3,6 +3,12 @@ export type Category = {
   name: string;
 };
 
+export type Comment = {
+  client: string;
+  rating: number | null;
+  commentText: string;
+};
+
 export type Product = {
   id: number;
   name: string;
@@ -10,6 +16,13 @@ export type Product = {
   ranking: number;
   reviews: number;
   price: number;
+  image: string;
+  seller: string;
+  deliveryTime: string;
+  deliveryPrice: string;
+  quantity: number;
+  description?: string;
+  comments?: Comment[];
 };
 
 export type Profile = {
